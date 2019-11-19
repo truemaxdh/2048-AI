@@ -3,9 +3,9 @@ var fnModel = {
   wt_hidden : [],
   wt_output : [],
   initWithBaseWeights : function(wt_base_input, wt_base_hidden, wt_base_output) {
-    wt_input = wt_base_input;
-    wt_hidden = wt_base_hidden;
-    wt_output = wt_base_output;
+    wt_input = wt_base_input.map((x)=>x);
+    wt_hidden = wt_base_hidden.map((x)=>x);
+    wt_output = wt_base_output.nap((x)=>x);
   },
   initWithSizes : function(input_sz, hidden_sz_2d, output_sz) {
     _fill_wt_rndNums(wt_input, 1, input_sz, hidden_sz_2d[1]);
