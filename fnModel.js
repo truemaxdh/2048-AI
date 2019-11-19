@@ -24,10 +24,26 @@ var fnModel = {
     }
   },
   forward : function(inputs) {
-    var sz = Math.min(inputs.length, wt_input[0].length);
+    if (inputs.length != wt_input[0].length) {
+      console.log("input size is incorrect!. The size should be " + 
+                  wt_input[0].length + ", but it is " + inputs.length);
+      return null;
+    }
     
+    var arr_calc = _mat_mul(inputs, wt_input[0]);
+    for (var l = 0; l < wt_hidden.length; l++) {
+      arr_calc = _mat_mul(arr_calc, wt_hidden[l]);
+    }
+    var outputs = _mat_mul(arr_calc, wt_output[0]);
+    return outputs;
   },
-  _mat_mul : function(arr_val, mat_wt) {
-    
+  _mat_mul : function(arr_in, arr_wt) {
+    var arr_out = new Array(arr_wt.length).fill(0);
+    for (var i_in = 0; i_in < arr_in.length; i_in++) {
+      for (var i_wt = 0; i_wt < arr_wt.length; i_wt++) {
+        arr_out[i_wt]+=arr_in[i_in] * arr_wt[i_in][i_wt];
+      }
+    }
+    return arr_out;
   }
 }
