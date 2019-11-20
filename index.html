@@ -42,6 +42,9 @@
       // - Up: 38 - Down: 40 - Right: 39 - Left: 37
       function sendKeyEvt(keyCode) {
         document.gameFrm.document.dispatchEvent(new KeyboardEvent('keydown',{'key':keyCode}));
+      }
+      
+      function sendKeyEvt2(keyCode) {
         document.gameFrm.document.dispatchEvent(new KeyboardEvent('keydown',{'key':'a'}));
       }
     </script>
@@ -50,9 +53,9 @@
     <div class="leftPannel">
       <button onclick="startGame();">Start Game</button>
       <button onclick="sendKeyEvt(38);">UP</button>
-      <button onclick="sendKeyEvt(40);">DOWN</button>
-      <button onclick="sendKeyEvt(39);">RIGHT</button>
-      <button onclick="sendKeyEvt(37);">LEFT</button>
+      <button onclick="sendKeyEvt('s');">DOWN</button>
+      <button onclick="sendKeyEvt('d');">RIGHT</button>
+      <button onclick="sendKeyEvt2(37);">LEFT</button>
     </div>
     <div class="gamePannel">
       <iframe name="gameFrm" src="./original_2048/index.html">
