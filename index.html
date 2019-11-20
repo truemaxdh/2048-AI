@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <style>
+      .leftPannel {
+        width:350px;
+        height:100%;
+        position:fixed;
+        z-index:1;
+        top:0;
+        left:0;
+        padding-left:20px;
+      }
+      
+      .rightPannel {
+        width:350px;
+        height:100%;
+        position:fixed;
+        z-index:1;
+        top:0;
+        right:0;
+        padding-left:20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="leftPannel">
+      <button onclick="">Start Game</button>
+    </div>
+    <div id="gamePannel">
+      <iframe name="gameFrm" src="/original_2048/index.html">
+        Do not support iframe
+      </iframe>
+    </div>
+    <div class="rightPannel">
+      Status
+    </div>
+  </body>
+</html>
