@@ -25,5 +25,29 @@ var EA = {
         }
       }
     }
+  },
+  evolve : function(_mutationRatio) {
+    var half = modelNum / 2;
+    for(var i_m = 0; i_m < half; i_m++) {
+      var m_refer = models[i_m];
+      var m_new = new fnModel();
+      m_new.initWithBaseWeights(m_refer.wt_input, m_refer.wt_hidden, m_refer.wt_output);
+      _mutate(m_new.wt_input, _mutationRatio);
+      _mutate(m_new.wt_hidden, _mutationRatio);
+      _mutate(m_new.wt_output, _mutationRatio);
+    }
+  },
+  _mutate : function(wt, ratio) {
+    var cnt = wt.length * wt[0].length * wt[0][0].length * ratio;
+    for (var i = 0;i < cnt;i++) {
+      var r_layer = Math.rnd() * wt.length;
+      var r_row = Math.rnd() * wt[0].length;
+      var r_col = Math.rnd() * wt[0][0].length;
+      wt[r_layer][r_row][r_col] = Math.rnd();
+    }
+  },
+  save : function(_path) {
+  },
+  load : function(_path) {
   }
 }
