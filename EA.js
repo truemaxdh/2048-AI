@@ -1,4 +1,5 @@
 var EA = {
+  generationId : 0,
   modelNum : 100,
   models : [],
   scores : [],
@@ -35,6 +36,10 @@ var EA = {
       _mutate(m_new.wt_input, _mutationRatio);
       _mutate(m_new.wt_hidden, _mutationRatio);
       _mutate(m_new.wt_output, _mutationRatio);
+      models[half + i_m] = m_new;
+      
+      scores[i_m] = 0;
+      scores[half + i_m] = 0;
     }
   },
   _mutate : function(wt, ratio) {
