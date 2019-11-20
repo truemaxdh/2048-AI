@@ -36,14 +36,22 @@
     <script>
       function startGame() {
         var btn = document.gameFrm.document.getElementsByClassName("restart-button")[0];
-        console.log(btn);
         btn.click();
+      }
+      
+      // - Up: 38 - Down: 40 - Right: 39 - Left: 37
+      function sendKeyEvt(keyCode) {
+        document.gameFrm.document.dispatchEvent(new KeyboardEvent('keypress',{'key':keyCode}));
       }
     </script>
   </head>
   <body>
     <div class="leftPannel">
       <button onclick="startGame();">Start Game</button>
+      <button onclick="sendKeyEvt(38);">UP</button>
+      <button onclick="sendKeyEvt(40);">DOWN</button>
+      <button onclick="sendKeyEvt(39);">RIGHT</button>
+      <button onclick="sendKeyEvt(37);">LEFT</button>
     </div>
     <div class="gamePannel">
       <iframe name="gameFrm" src="./original_2048/index.html">
