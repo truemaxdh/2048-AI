@@ -33,6 +33,9 @@
         padding-left:20px;
       }
     </style>
+    <script src="fnModel.js"></script>
+    <script src="EA.js"></script>
+    <script src="main.js"></script>
     <script>
       var gameMgr;
       function startGame() {
@@ -40,7 +43,7 @@
         btn.click();
       }
       
-      // - Up: 38 - Down: 40 - Right: 39 - Left: 37
+      // - Left: 37 - Up: 38 - Right: 39 - Down: 40
       function sendKeyEvt(keyCode) {
         document.gameFrm.document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':keyCode}));
       }
@@ -55,18 +58,51 @@
         }
         console.log(gameMgr);
       }
+      
+      function createFirstGeneration() {
+        EA.createModels();
+        console.log(EA);
+      }
+      
+      function proceed1Step() {
+        var inputs = [];
+        var cells = gameMgr.grid.cells;
+        for (var x = 0; x < cells.length; x++) {
+          var c_x = cells[x];
+          for (var y = 0; y < c_x.length; y++) {
+            var tile = c_x[y];
+            if (tile) {
+              input.push(tile.value);
+            } else {
+              input.push(0);
+            }
+          }
+        }
+        console.log(inputs);
+        var outputs = EA.models[0].forward(inputs);
+        console.log(outputs);
+        var i_max = 0;
+        for (var i = 0; i < outputs.length; i++) {
+          if (outputs[i_max] < outputs[i]) {
+            i_max = i;
+          }
+        }
+        sendKeyEvt(37 + i_max);
+      }
     </script>
   </head>
   <body>
     <div class="leftPannel">
       <button onclick="startGame();">Start Game</button>
-      <br>
+      <br><br>
       <button onclick="sendKeyEvt(38);">UP</button>
       <button onclick="sendKeyEvt(40);">DOWN</button>
       <button onclick="sendKeyEvt(39);">RIGHT</button>
       <button onclick="sendKeyEvt(37);">LEFT</button>
-      <br>
+      <br><br>
       <button onclick="getTileData();">getTileData</button>
+      <br><br>
+      <button onclick="createFirstGeneration();">createFirstGeneration</button>
     </div>
     <div class="gamePannel">
       <iframe name="gameFrm" src="./original_2048/index.html">
