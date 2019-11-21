@@ -45,10 +45,10 @@ var EA = {
   _mutate : function(wt, ratio) {
     var cnt = wt.length * wt[0].length * wt[0][0].length * ratio;
     for (var i = 0;i < cnt;i++) {
-      var r_layer = Math.rndom() * wt.length;
-      var r_row = Math.rndom() * wt[0].length;
-      var r_col = Math.rndom() * wt[0][0].length;
-      wt[r_layer][r_row][r_col] = Math.rndom();
+      var r_layer = Math.random() * wt.length;
+      var r_row = Math.random() * wt[0].length;
+      var r_col = Math.random() * wt[0][0].length;
+      wt[r_layer][r_row][r_col] = Math.random();
     }
   },
   save : function(_path) {
