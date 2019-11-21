@@ -34,6 +34,7 @@
       }
     </style>
     <script>
+      var gameMgr;
       function startGame() {
         var btn = document.gameFrm.document.getElementsByClassName("restart-button")[0];
         btn.click();
@@ -45,6 +46,14 @@
       }
       
       function getTileData() {
+        if (!gridCap) {
+          gameMgr = new document.gameFrm.GameManager(
+            4,
+            document.gameFrm.KeyboardInputManager, 
+            document.gameFrm.HTMLActuator, 
+            document.gameFrm.LocalStorageManager);
+        }
+        console.log(gameMgr);
       }
     </script>
   </head>
