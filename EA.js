@@ -9,7 +9,7 @@ var EA = {
       var m = new fnModel();
       m.initWithSizes(16, [3,16],4);
       this.models.push(m);
-      this.scores.push[0];
+      this.scores.push(0);
     }
   },
   sortByScore : function() {
