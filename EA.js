@@ -5,7 +5,7 @@ var EA = {
   scores : [],
   createModels : function(_modelNum) {
     this.modelNum = _modelNum;
-    for(var i_m = 0; i_m < modelNum; i_m++) {
+    for(var i_m = 0; i_m < this.modelNum; i_m++) {
       var m = new fnModel();
       m.initWithSizes(16, [3,16],4);
       this.models.push(m);
