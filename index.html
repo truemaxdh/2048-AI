@@ -48,7 +48,7 @@
         document.gameFrm.document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':keyCode}));
       }
       
-      function getTileData() {
+      function connectToGame() {
         if (!gameMgr) {
           gameMgr = new document.gameFrm.GameManager(
             4,
@@ -59,9 +59,15 @@
         console.log(gameMgr);
       }
       
+      var i_model = -1;
       function createFirstGeneration() {
         EA.createModels(100);
         console.log(EA);
+      }
+      
+      function nextModel() {
+        startGame();
+        i_model++;
       }
       
       function proceed1Step() {
@@ -79,7 +85,7 @@
           }
         }
         console.log(inputs);
-        var outputs = EA.models[0].forward(inputs);
+        var outputs = EA.models[i_model].forward(inputs);
         console.log(outputs);
         var i_max = 0;
         for (var i = 0; i < outputs.length; i++) {
@@ -88,6 +94,9 @@
           }
         }
         sendKeyEvt(37 + i_max);
+        setTimeout(function() {
+          EA.scores[i_model] = gameMgr.score;
+        }, 500);
       }
     </script>
   </head>
@@ -103,6 +112,7 @@
       <button onclick="getTileData();">getTileData</button>
       <br><br>
       <button onclick="createFirstGeneration();">createFirstGeneration</button>
+      <button onclick="nextModel();">nextModel</button>
       <button onclick="proceed1Step();">proceed1Step</button>
     </div>
     <div class="gamePannel">
