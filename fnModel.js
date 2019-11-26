@@ -40,10 +40,11 @@ function fnModel() {
   this._mat_mul = function(arr_in, arr_wt) {
     var arr_out = new Array(arr_wt[0].length).fill(0);
     for (var i_in = 0; i_in < arr_in.length; i_in++) {
-      for (var i_wt = 0; i_wt < arr_wt.length; i_wt++) {
+      for (var i_wt = 0; i_wt < arr_wt[i_in].length; i_wt++) {
         arr_out[i_wt]+=arr_in[i_in] * arr_wt[i_in][i_wt];
       }
     }
+    console.log(arr_out);
     return arr_out;
   };
 }
