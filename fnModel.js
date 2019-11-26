@@ -18,7 +18,7 @@ function fnModel() {
       for (var r = 0; r < row; r++) {
         wt[l].push([]);
         for (var c = 0; c < col; c++) {
-          wt[l][r].push(Math.random());
+          wt[l][r].push(Math.random() * 2.0 - 1.0);
         }
       }
     }
@@ -42,6 +42,12 @@ function fnModel() {
     for (var i_in = 0; i_in < arr_in.length; i_in++) {
       for (var i_wt = 0; i_wt < arr_wt[i_in].length; i_wt++) {
         arr_out[i_wt]+=arr_in[i_in] * arr_wt[i_in][i_wt];
+      }
+    }
+    // Apply ReLU
+    for (var i_out = 0; i_out < arr_out.length; i_out++) {
+      if (arr_out[i_out] < 0) {
+        arr_out[i_out] = 0;
       }
     }
     console.log(arr_out);
