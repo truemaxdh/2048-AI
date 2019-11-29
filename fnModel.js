@@ -18,7 +18,7 @@ function fnModel() {
       for (var r = 0; r < row; r++) {
         wt[l].push([]);
         for (var c = 0; c < col; c++) {
-          wt[l][r].push(Math.random() * 2.0 - 1.0);
+          wt[l][r].push(Math.floor((Math.random() * 2.0 - 1.0) * 10000000) / 10000000);
         }
       }
     }
