@@ -12,9 +12,18 @@ var EA = {
       this.scores.push(0);
     }
   },
+  loadModels: function(models, scores) {
+	  this.models = [];
+	  for (var i = 0; i < models.length; i++) {
+		  var m = new fnModel();
+	      m.initWithBaseWeights(models[i].wt_input, models[i].wt_hidden, models[i].wt_output);
+	      this.models.push(m);  
+	  }	  
+	  this.scores = scores;
+  },
   sortByScore : function() {
     for(var i_m1 = 0; i_m1 < (this.modelNum-1); i_m1++) {
-      for(var i_m2 = 1; i_m2 < this.modelNum; i_m2++) {
+      for(var i_m2 = (i_m1 + 1); i_m2 < this.modelNum; i_m2++) {
         if (this.scores[i_m1] < this.scores[i_m2]) {
           var tmp = this.models[i_m1];
           this.models[i_m1] = this.models[i_m2];
@@ -41,6 +50,7 @@ var EA = {
       this.scores[i_m] = 0;
       this.scores[half + i_m] = 0;
     }
+    this.generationId++;
   },
   _mutate : function(wt, ratio) {
     var cnt = wt.length * wt[0].length * wt[0][0].length * ratio;
@@ -51,8 +61,5 @@ var EA = {
       wt[r_layer][r_row][r_col] = Math.random();
     }
   },
-  save : function(_path) {
-  },
-  load : function(_path) {
-  }
+  
 }
