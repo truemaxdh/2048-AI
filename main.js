@@ -150,7 +150,7 @@ function evolve() {
 
 function autoProceed(callBacks) {
 	if (i_model < 0) {
-		model = nextModel();
+		nextModel();
 	  }
 	  proceed1Step(callBacks[0]);
 		  
