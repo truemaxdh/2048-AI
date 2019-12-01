@@ -162,7 +162,8 @@ function autoProceed(callBacks) {
 		  // 2. Show Result
 		  callBacks[1]();
 		  
-		  // 3. Next Generation		  
+		  // 3. Next Generation
+		  if (EA.generationId == 99) return;		  
 		  evolve();
 	  }
 	  setTimeout(autoProceed, 300, callBacks);	
