@@ -47,7 +47,7 @@ function loadGeneration(strJson) {
 function nextModel() {
   restartGame();
   i_model++;
-  return (i_model >= EA.models.length) ? null : EA.models[i_model];	  
+  model = (i_model >= EA.models.length) ? null : EA.models[i_model];	  
 }
 
 function compArrVals(arr1, arr2) {
@@ -98,7 +98,7 @@ function moveOnce() {
 
 function proceed1Step(callBack_showStat) {
 	  if (!moveOnce()) {
-		  model = nextModel();
+		  nextModel();
 	  }
 	  
 	  callBack_showStat();
@@ -106,7 +106,7 @@ function proceed1Step(callBack_showStat) {
 
 function proceed1Gen(callBack_showStat) {
 	  if (i_model < 0) {
-		  model = nextModel();
+		  nextModel();
 	  }
 	  proceed1Step(callBack_showStat);
 		  
@@ -131,8 +131,16 @@ function makeResultJSON() {
 			models: EA.models,
 			scores : EA.scores
 	};
-	var w = window.open();
-	w.document.write(JSON.stringify(json));
+	
+	var a = document.createElement('a');
+	a.setAttribute('href', 'data:text/plain;charset=utf-8,' +
+		encodeURIComponent(JSON.stringify(json)));
+	a.setAttribute('download', json.title);
+
+	a.style.display = 'none';
+	document.body.appendChild(a);
+	a.click();
+	document.body.removeChild(a);
 }
 
 function evolve() {
