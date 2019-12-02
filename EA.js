@@ -37,6 +37,7 @@ var EA = {
     }
   },
   evolve : function(_mutationRatio) {
+	  if (!_mutationRatio) _mutationRatio = 0.1;
     var half = this.modelNum / 2;
     for(var i_m = 0; i_m < half; i_m++) {
       var m_refer = this.models[i_m];
