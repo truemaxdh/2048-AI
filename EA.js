@@ -37,6 +37,7 @@ var EA = {
     }
   },
   evolve : function(_mutationRatio) {
+	  if (!_mutationRatio) _mutationRatio = 0.1;
     var half = this.modelNum / 2;
     for(var i_m = 0; i_m < half; i_m++) {
       var m_refer = this.models[i_m];
@@ -55,10 +56,11 @@ var EA = {
   _mutate : function(wt, ratio) {
     var cnt = wt.length * wt[0].length * wt[0][0].length * ratio;
     for (var i = 0;i < cnt;i++) {
-      var r_layer = Math.random() * wt.length;
-      var r_row = Math.random() * wt[0].length;
-      var r_col = Math.random() * wt[0][0].length;
-      wt[r_layer][r_row][r_col] = Math.random();
+      var r_layer = Math.floor(Math.random() * wt.length);
+      var r_row = Math.floor(Math.random() * wt[0].length);
+      var r_col = Math.floor(Math.random() * wt[0][0].length);
+      //console.log(r_layer+"," + r_row + "," + r_col);
+      wt[r_layer][r_row][r_col] = Math.floor((Math.random() * 2.0 - 1.0) * 10000000) / 10000000;
     }
   },
   

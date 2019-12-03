@@ -135,7 +135,7 @@ function makeResultJSON() {
 	var a = document.createElement('a');
 	a.setAttribute('href', 'data:text/plain;charset=utf-8,' +
 		encodeURIComponent(JSON.stringify(json)));
-	a.setAttribute('download', json.title);
+	a.setAttribute('download', json.title + ".json");
 
 	a.style.display = 'none';
 	document.body.appendChild(a);
@@ -164,7 +164,7 @@ function autoProceed(callBacks) {
 		  
 		  // 3. Next Generation
 		  if (EA.generationId == 99) return;		  
-		  evolve();
+		  evolve(0.05);
 	  }
 	  setTimeout(autoProceed, 300, callBacks);	
 }
