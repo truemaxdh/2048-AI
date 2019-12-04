@@ -107,7 +107,9 @@ function moveOnce() {
 		lastMove = move;
 		break;
 	}
-		
+	console.log(inputs);
+	console.log(outputs);
+	console.log(move);	
 	outputs[move] = NM_MIN_VALUE;
   }
   
