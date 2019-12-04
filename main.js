@@ -79,10 +79,11 @@ function moveOnce() {
       }
     }
   }
-  //console.log(last_inputs);
-  //console.log(inputs);
   
   if (compArrVals(last_inputs, inputs)) {
+	  console.log(last_inputs);
+	  console.log(inputs);
+	  alert("go to next model");
 	  last_inputs = null;
 	  return false;
   }
