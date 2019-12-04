@@ -107,9 +107,6 @@ function moveOnce() {
 		lastMove = move;
 		break;
 	}
-	console.log(inputs);
-	console.log(outputs);
-	console.log(move);	
 	outputs[move] = NM_MIN_VALUE;
   }
   
@@ -129,12 +126,14 @@ function isMovable(_in_arr16, _dir) {
 	var dx = _dir - 1;
 	var dy = _dir - 2;
 	var b_movable = false;
+	console.log(dx + "," + dy);
 	for (var i = 0; i < _in_arr16.length; i++) {
 		if (!_in_arr16[i]) continue;
-		var nx = i % 4 + dx;
-		var ny = i / 4 | 0 + dy;
+		var nx = i / 4 | 0 + dx;
+		var ny = i % 4 + dy;
 		if (nx < 0 || nx >= 4 || ny < 0 || ny >= 4) continue;
-		var i_new = 4 * ny + nx;
+		var i_new = 4 * nx + ny;
+		console.log(i + ":" + _in_arr16[i] + "->" + i_new + ":" + _in_arr16[i_new]);
 		if (!_in_arr16[i_new] || _in_arr16[i] == _in_arr16[i_new]) {
 			b_movable = true;
 			break;
