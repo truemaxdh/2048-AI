@@ -131,8 +131,10 @@ function isMovable(_in_arr16, _dir) {
 	var b_movable = false;
 	for (var i = 0; i < _in_arr16.length; i++) {
 		if (!_in_arr16[i]) continue;
-		var i_new = i + 4 * dy + dx;
-		if (i_new < 0 || i_new >= 16) continue;
+		var nx = i % 4 + dx;
+		var ny = i / 4 | 0 + dy;
+		if (nx < 0 || nx >= 4 || ny < 0 || ny >= 4) continue;
+		var i_new = 4 * ny + nx;
 		if (!_in_arr16[i_new] || _in_arr16[i] == _in_arr16[i_new]) {
 			b_movable = true;
 			break;
