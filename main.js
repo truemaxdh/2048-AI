@@ -81,9 +81,9 @@ function moveOnce() {
   }
   
   if (compArrVals(last_inputs, inputs)) {
-	  console.log(last_inputs);
-	  console.log(inputs);
-	  console.log("go to next model");
+	  //console.log(last_inputs);
+	  //console.log(inputs);
+	  //console.log("go to next model");
 	  last_inputs = null;
 	  return false;
   }
