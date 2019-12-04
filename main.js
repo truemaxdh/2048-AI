@@ -90,7 +90,7 @@ function moveOnce() {
   
   
   var outputs = model.forward(inputs);
-  //console.log(outputs);
+  console.log(outputs);
 
   var NM_MIN_VALUE = -99999999;
   lastMove = -1;
