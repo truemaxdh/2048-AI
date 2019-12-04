@@ -19,7 +19,7 @@ var model = null;
 var i_model = -1;
 var last_inputs;
 var lastMove;
-var b_Workaround = true;
+var b_workaround = true;
 
 function toggle_wkar(_t_f) {
 	b_workaround=_t_f;
