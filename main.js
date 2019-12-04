@@ -123,8 +123,8 @@ function moveOnce() {
  * @param {*} _dir : 0 - L, 1 - U, 2 - R, 3 - D 
  */
 function isMovable(_in_arr16, _dir) {
-	var dx = _dir - 1;
-	var dy = _dir - 2;
+	var dx = (_dir - 1) % 2;
+	var dy = (_dir - 2) % 2;
 	var b_movable = false;
 	console.log(dx + "," + dy);
 	for (var i = 0; i < _in_arr16.length; i++) {
