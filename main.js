@@ -19,6 +19,11 @@ var model = null;
 var i_model = -1;
 var last_inputs;
 var lastMove;
+var b_Workaround = true;
+
+function toggle_wkar(_t_f) {
+	b_workaround=_t_f;
+}
 
 function connectToGame() {
   if (!gameMgr) {
@@ -85,15 +90,54 @@ function moveOnce() {
   
   var outputs = model.forward(inputs);
   //console.log(outputs);
-  lastMove = 0;
-  for (var i = 1; i < outputs.length; i++) {
-    if (outputs[lastMove] < outputs[i]) {
-    	lastMove = i;
-    }
+
+  var NM_MIN_VALUE = -99999999;
+  lastMove = -1;
+  var trialCnt = b_workaround ? 4:1;
+  for (var t = 0; t < trialCnt; t++) {
+	var top_output = NM_MIN_VALUE;
+	var move = -1;
+	for (var i = 0; i < outputs.length; i++) {
+		if (top_output < outputs[i]) {
+			top_output = outputs[i];
+			move = i;
+		}
+	}
+	if (isMovable(inputs, move)) {
+		lastMove = move;
+		break;
+	}
+		
+	outputs[move] = NM_MIN_VALUE;
   }
-  sendKeyEvt(37 + lastMove);
+  
+  if (lastMove >= 0) {
+	sendKeyEvt(37 + lastMove);
+  }
   last_inputs = inputs;
   return true;
+}
+
+/**
+ * Check if able to move 
+ * @param {*} _in_arr16 
+ * @param {*} _dir : 0 - L, 1 - U, 2 - R, 3 - D 
+ */
+function isMovable(_in_arr16, _dir) {
+	var dx = _dir - 1;
+	var dy = _dir - 2;
+	var b_movable = false;
+	for (var i = 0; i < _in_arr16.length; i++) {
+		if (!_in_arr16[i]) continue;
+		var i_new = i + 4 * dy + dx;
+		if (i_new < 0 || i_new >= 16) continue;
+		if (!_in_arr16[i_new] || _in_arr16[i] == _in_arr16[i_new]) {
+			b_movable = true;
+			break;
+		}	
+	}
+
+	return b_movable;
 }
 
 function proceed1Step(callBack_showStat) {
@@ -148,7 +192,7 @@ function evolve() {
 	  i_model = -1;
 }
 
-function autoProceed(callBacks) {
+function autoProceed(callBacks, _mutation_ratio, ck_wkar) {
 	if (i_model < 0) {
 		nextModel();
 	  }
@@ -163,8 +207,8 @@ function autoProceed(callBacks) {
 		  callBacks[1]();
 		  
 		  // 3. Next Generation
-		  if (EA.generationId == 99) return;		  
-		  evolve(0.01);
+		  if (EA.generationId == 99) return;
+		  evolve(_mutation_ratio);
 	  }
 	  setTimeout(autoProceed, 300, callBacks);	
 }

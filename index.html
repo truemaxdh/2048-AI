@@ -107,26 +107,29 @@
       <button onclick="loadGeneration(document.getElementById('strJson').value);">Load</button>
       <br>
       <textarea id="strJson"></textarea>
-      <h4>Unit Functions</h4>
+      <<!-- h4>Unit Functions</h4>
       <button onclick="nextModel();">nextModel</button>
       <button onclick="proceed1Step(showStatus);">proceed1Step</button>
       <h4>Unit Generation</h4>
       <button onclick="proceed1Gen(showStatus);">proceed1Gen</button>
       <button onclick="makeResultJSON();">makeResultJSON</button>
       <button onclick="showGenerationResult();">showGenerationResult</button>
-      <button onclick="evolve();">evolve</button>
+      <button onclick="evolve();">evolve</button> -->
+      <h4>Options</h4>
+      <label for="mutRat">Mutation Ratio :</label><input id="mutRat" value="0.01" style="width:35px;border:1px solid black;"><br>
+      <input id="ck_wkar" type="checkbox" checked onclick="toggle_wkar(this.checked);"><label for="ck_wkar">Choose a workaround if necessary</label>
       <h4>Auto Proceed</h4>
-      <button onclick="autoProceed([showStatus, showGenerationResult]);">autoProceed</button>
+      <button onclick="autoProceed([showStatus, showGenerationResult],document.getElementById('mutRat').value);">autoProceed</button>
       <h4>Status</h4>
-      Generation : <input id="g_id" style="width:35px;border:1px solid black;"><br>
-      Model Id : <input id="m_id" style="width:30px;border:1px solid black;"><br>
-      Score : <input id="sc" style="width:50px;border:1px solid black;"><br>
+      <Label for="g_id">Generation :</Label><input id="g_id" style="width:35px;border:1px solid black;"><br>
+      <Label for="m_id">Model Id :</Label><input id="m_id" style="width:30px;border:1px solid black;"><br>
+      <Label for="sc">Score :</Label><input id="sc" style="width:50px;border:1px solid black;"><br>
       <button id="move0">L</button>
       <button id="move1">U</button>
       <button id="move2">R</button>
       <button id="move3">D</button>
       <br>
-      <div id="lastBoards" style="overflow:scroll;"></div>
+      <div id="lastBoards" style="width:100%;height:100%;overflow-y:scroll;"></div>
     </div>
     <div class="gamePannel">
       <iframe name="gameFrm" src="./original_2048/index.html">
