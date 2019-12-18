@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <style>
+      .leftPannel {
+        width:350px;
+        height:100%;
+        position:fixed;
+        z-index:1;
+        top:0;
+        left:0;
+        padding-left:20px;
+      }
+      
+      .gamePannel {
+        width:100%;
+        height:100%;
+        padding:0;
+      }
+      
+      .gamePannel iframe {
+        width:100%;
+        height:100%;
+        border:0;
+      }
+      
+      button, textarea {
+      	opacity : 0.7;
+      	background : white;
+      	font-weight: bold;
+      	border: 1px solid black;
+      }
+      
+      /* .rightPannel {
+        width:350px;
+        height:100%;
+        position:fixed;
+        z-index:1;
+        top:0;
+        right:0;
+        padding-left:20px;
+      } */
+    </style>
+    <script src="../common/fnModel.js"></script>
+    <script src="BP.js"></script>
+    <script src="main.js"></script>
+    <script>
+    	function showPredict(_dir) {
+        for (var i = 0; i < 4; i++) {
+          var mBtn = document.getElementById("move" + i);
+          if (_dir == i) 
+            mBtn.style.background = "orange";
+          else 
+            mBtn.style.background = "white";
+        }
+      }
+
+      function showStatus() {
+    	  try {
+    		  for (var i = 0; i < 4; i++) {
+    	    		var mBtn = document.getElementById("move" + i);
+    	    		if (lastMove == i) 
+    	    			mBtn.style.background = "orange";
+    	    		else 
+    	    			mBtn.style.background = "white";
+    	    	}  
+    		
+    		  document.getElementById("g_id").value = EA.generationId;
+    		  document.getElementById("m_id").value = i_model;
+    		  setTimeout(function() {
+    			  EA.scores[i_model] = gameMgr.score;
+    			  document.getElementById("sc").value = EA.scores[i_model];
+    			  }, 200);	
+    	  } catch(err) {
+    		  
+    	  }
+    	
+      }
+      
+    </script>
+  </head>
+  <body>
+    <div class="leftPannel">
+      <h4>Game Connection</h4>
+      <button onclick="connectToGame();">connectToGame</button>
+      <h4>Create/Load Weights</h4>
+      <button onclick="createWt();">Create</button>
+      <button onclick="loadWt(document.getElementById('strJson').value);">Load</button>
+      <br>
+      <textarea id="strJson"></textarea>
+      <h4>Unit Functions</h4>
+      <button onclick="predict(showStatus);">predict</button>
+      <h4>Options</h4>
+      <h4>Status</h4>
+      <Label for="g_id">Generation :</Label><input id="g_id" style="width:35px;border:1px solid black;"><br>
+      <Label for="m_id">Model Id :</Label><input id="m_id" style="width:30px;border:1px solid black;"><br>
+      <Label for="sc">Score :</Label><input id="sc" style="width:50px;border:1px solid black;"><br>
+      <button id="pre0">L</button>
+      <button id="pre1">U</button>
+      <button id="pre2">R</button>
+      <button id="pre3">D</button>
+      <br>
+      <button id="move0">L</button>
+      <button id="move1">U</button>
+      <button id="move2">R</button>
+      <button id="move3">D</button>
+      <br>
+      <div id="lastBoards" style="width:100%;height:100%;overflow-y:scroll;"></div>
+    </div>
+    <div class="gamePannel">
+      <iframe name="gameFrm" src="../original_2048/index.html">
+        Do not support iframe
+      </iframe>
+    </div>
+  </body>
+</html>
