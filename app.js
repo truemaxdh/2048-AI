@@ -12,7 +12,7 @@ function send404Message(response){
 // 200 Okay : 정상적인 요청 
 function onRequest(request, response){
     console.log(request.url);
-    response.writeHead(200,{"Content-Type":"text/html"}); // 웹페이지 출력
+    //response.writeHead(200,{"Content-Type":"text/html"}); // 웹페이지 출력
     if(request.method == 'GET' && request.url == '/'){
      
   response.writeHead(200,{"Content-Type":"text/html"}); // 웹페이지 출력
