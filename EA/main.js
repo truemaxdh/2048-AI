@@ -20,6 +20,8 @@ var i_model = -1;
 var last_inputs;
 var lastMove;
 var b_workaround = true;
+var moveCnt = 0;
+var lossCnt = 0;
 
 function toggle_wkar(_t_f) {
 	b_workaround=_t_f;
@@ -37,8 +39,9 @@ function connectToGame() {
 }
 
 
-function createFirstGeneration() {
-  EA.createModels(100);
+function createFirstGeneration(_modelNum) {
+	if (!_modelNum) _modelNum = 30;
+  EA.createModels(_modelNum);
   console.log(EA);
 }
 
@@ -52,6 +55,8 @@ function loadGeneration(strJson) {
 function nextModel() {
   restartGame();
   i_model++;
+  moveCnt = 0;
+  lossCnt = 0;
   model = (i_model >= EA.models.length) ? null : EA.models[i_model];	  
 }
 
@@ -63,6 +68,34 @@ function compArrVals(arr1, arr2) {
 	}
 	return true;
 }
+
+
+/**
+ * Check if able to move 
+ * @param {*} _in_arr16 
+ * @param {*} _dir : 0 - L, 1 - U, 2 - R, 3 - D 
+ */
+function isMovable(_in_arr16, _dir) {
+	var dx = (_dir - 1) % 2;
+	var dy = (_dir - 2) % 2;
+	var b_movable = false;
+	//console.log(dx + "," + dy);
+	for (var i = 0; i < _in_arr16.length; i++) {
+		if (!_in_arr16[i]) continue;
+		var nx = (i / 4 | 0) + dx;
+		var ny = (i % 4) + dy;
+		if (nx < 0 || nx >= 4 || ny < 0 || ny >= 4) continue;
+		var i_new = 4 * nx + ny;
+		//console.log(i + ":" + _in_arr16[i] + "->" + i_new + ":" + _in_arr16[i_new]);
+		if (!_in_arr16[i_new] || _in_arr16[i] == _in_arr16[i_new]) {
+			b_movable = true;
+			break;
+		}	
+	}
+
+	return b_movable;
+}
+
 
 function moveOnce() {
 	lastMove = -1;
@@ -95,7 +128,8 @@ function moveOnce() {
   var NM_MIN_VALUE = -99999999;
   lastMove = -1;
   var trialCnt = b_workaround ? 4:1;
-  for (var t = 0; t < trialCnt; t++) {
+  var t = 0;
+  for (; t < trialCnt; t++) {
 	var top_output = NM_MIN_VALUE;
 	var move = -1;
 	for (var i = 0; i < outputs.length; i++) {
@@ -112,48 +146,29 @@ function moveOnce() {
   }
   
   if (lastMove >= 0) {
-	sendKeyEvt(37 + lastMove);
+	  moveCnt++;
+	  (t > 0) && lossCnt++;
+	  sendKeyEvt(37 + lastMove);
   }
   last_inputs = inputs;
   return true;
 }
 
-/**
- * Check if able to move 
- * @param {*} _in_arr16 
- * @param {*} _dir : 0 - L, 1 - U, 2 - R, 3 - D 
- */
-function isMovable(_in_arr16, _dir) {
-	var dx = (_dir - 1) % 2;
-	var dy = (_dir - 2) % 2;
-	var b_movable = false;
-	//console.log(dx + "," + dy);
-	for (var i = 0; i < _in_arr16.length; i++) {
-		if (!_in_arr16[i]) continue;
-		var nx = (i / 4 | 0) + dx;
-		var ny = (i % 4) + dy;
-		if (nx < 0 || nx >= 4 || ny < 0 || ny >= 4) continue;
-		var i_new = 4 * nx + ny;
-		//console.log(i + ":" + _in_arr16[i] + "->" + i_new + ":" + _in_arr16[i_new]);
-		if (!_in_arr16[i_new] || _in_arr16[i] == _in_arr16[i_new]) {
-			b_movable = true;
-			break;
-		}	
-	}
-
-	return b_movable;
-}
 
 function proceed1Step(callBack_showStat) {
 	  if (!moveOnce()) {
+		  EA.scores[i_model] -= Math.floor(EA.scores[i_model] / moveCnt * lossCnt);
 		  nextModel();
 	  }
-	  
-	  callBack_showStat();
+	  setTimeout(function() {
+		  EA.scores[i_model] = gameMgr.score;
+		  callBack_showStat();
+	  }, 200);
 }
 
 function proceed1Gen(callBack_showStat) {
 	  if (i_model < 0) {
+		  EA.scores[i_model] -= Math.floor(EA.scores[i_model] / moveCnt * lossCnt);
 		  nextModel();
 	  }
 	  proceed1Step(callBack_showStat);
@@ -169,7 +184,7 @@ function makeResultJSON() {
 		for (var i = 0; i < EA.scores.length;i++) {
 			tot += EA.scores[i];
 		}
-		return (tot / EA.scores.length);
+		return cutOff(tot / EA.scores.length);
 	})();
 	var json = {
 			title:'gen' + EA.generationId + '_top' + EA.scores[0] + '_avg' + avg,

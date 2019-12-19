@@ -57,10 +57,7 @@
     		
     		  document.getElementById("g_id").value = EA.generationId;
     		  document.getElementById("m_id").value = i_model;
-    		  setTimeout(function() {
-    			  EA.scores[i_model] = gameMgr.score;
-    			  document.getElementById("sc").value = EA.scores[i_model];
-    			  }, 200);
+   			  document.getElementById("sc").value = EA.scores[i_model];
     		  
     		  /* var lb = document.getElementById("lastBoards");
     	    	var addHTML = "<table>";
@@ -116,7 +113,7 @@
       <button onclick="showGenerationResult();">showGenerationResult</button>
       <button onclick="evolve();">evolve</button>
       <h4>Options</h4>
-      <label for="mutRat">Mutation Ratio :</label><input id="mutRat" value="0.01" style="width:35px;border:1px solid black;"><br>
+      <label for="mutRat">Mutation Ratio :</label><input id="mutRat" value="0.2" style="width:35px;border:1px solid black;"><br>
       <input id="ck_wkar" type="checkbox" checked onclick="toggle_wkar(this.checked);"><label for="ck_wkar">Choose a workaround if necessary</label>
       <h4>Auto Proceed</h4>
       <button onclick="autoProceed([showStatus, showGenerationResult],document.getElementById('mutRat').value);">autoProceed</button>
@@ -132,7 +129,7 @@
       <div id="lastBoards" style="width:100%;height:100%;overflow-y:scroll;"></div>
     </div>
     <div class="gamePannel">
-      <iframe name="gameFrm" src="./original_2048/index.html">
+      <iframe name="gameFrm" src="../original_2048/index.html">
         Do not support iframe
       </iframe>
     </div>
