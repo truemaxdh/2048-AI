@@ -64,12 +64,10 @@
     	    			mBtn.style.background = "white";
     	    	}  
     		
-    		  document.getElementById("g_id").value = EA.generationId;
-    		  document.getElementById("m_id").value = i_model;
-    		  setTimeout(function() {
-    			  EA.scores[i_model] = gameMgr.score;
-    			  document.getElementById("sc").value = EA.scores[i_model];
-    			  }, 200);	
+    		  document.getElementById("trainCnt").value = BP.trainCnt;
+          document.getElementById("matchCnt").value = BP.matchCnt;
+          document.getElementById("lastPlayTrainCnt").value = BP.lastPlayTrainCnt;
+          document.getElementById("lastPlayMatchCnt").value = BP.lastPlayMatchCnt;
     	  } catch(err) {
     		  
     	  }
@@ -88,12 +86,13 @@
       <br>
       <textarea id="strJson"></textarea>
       <h4>Unit Functions</h4>
-      <button onclick="predict(showStatus);">predict</button>
+      <button onclick="start(showStatus, showPredict);">start</button>
       <h4>Options</h4>
       <h4>Status</h4>
-      <Label for="g_id">Generation :</Label><input id="g_id" style="width:35px;border:1px solid black;"><br>
-      <Label for="m_id">Model Id :</Label><input id="m_id" style="width:30px;border:1px solid black;"><br>
-      <Label for="sc">Score :</Label><input id="sc" style="width:50px;border:1px solid black;"><br>
+      <Label for="trainCnt">trainCnt :</Label><input id="trainCnt" style="width:35px;border:1px solid black;"><br>
+      <Label for="matchCnt">matchCnt :</Label><input id="matchCnt" style="width:30px;border:1px solid black;"><br>
+      <Label for="lastPlayTrainCnt">lastPlayTrainCnt :</Label><input id="lastPlayTrainCnt" style="width:50px;border:1px solid black;"><br>
+      <Label for="lastPlayMatchCnt">lastPlayMatchCnt :</Label><input id="lastPlayMatchCnt" style="width:50px;border:1px solid black;"><br>
       <button id="pre0">L</button>
       <button id="pre1">U</button>
       <button id="pre2">R</button>

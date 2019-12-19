@@ -1,6 +1,9 @@
 var BP = {
   trainCnt : 0,
   matchCnt : 0,
+  playCnt : 0,
+  lastPlayTrainCnt : 0,
+  lastPlayMatchCnt : 0,
   model : null,
   createModel : function() {
     this.trainCnt = 0;

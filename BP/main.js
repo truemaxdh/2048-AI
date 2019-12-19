@@ -1,12 +1,23 @@
 /**
+ * ===================================
  * Button and Keyboard Event Generator
+ * ===================================
  */
+
+ /**
+  * restart game
+  */
 function restartGame() {
   var btn = document.gameFrm.document.getElementsByClassName("restart-button")[0];
   btn.click();
 }
 
-// - Left: 37 - Up: 38 - Right: 39 - Down: 40
+
+/**
+ * send key event to game
+ * - Left: 37 - Up: 38 - Right: 39 - Down: 40
+ * @param {*} keyCode 
+ */
 function sendKeyEvt(keyCode) {
   document.gameFrm.document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':keyCode}));
 }
@@ -17,10 +28,14 @@ function sendKeyEvt(keyCode) {
 var gameMgr;
 var model = null;
 var last_inputs;
-var lastPre;
+var lastPredict;
 var lastMove;
 var b_workaround = true;
+var callBack_showStatus, callBack_showPredict;
 
+/**
+ * connect to game
+ */
 function connectToGame() {
   if (!gameMgr) {
     gameMgr = new document.gameFrm.GameManager(
@@ -32,13 +47,19 @@ function connectToGame() {
   console.log(gameMgr);
 }
 
-
+/**
+ * create new weights
+ */
 function createWt() {
   BP.createModel();
 	model = BP.model;
   console.log(BP);
 }
 
+/**
+ * load weights from json text
+ * @param {*} strJson 
+ */
 function loadWt(strJson) {
 	var tmp = JSON.parse(strJson);
 	BP.loadModel(tmp.model, tmp.trainCnt, tmp.matchCnt);
@@ -46,6 +67,12 @@ function loadWt(strJson) {
 	console.log(BP);
 }
 
+/**
+ * compare two arrays
+ * 
+ * @param {*} arr1 
+ * @param {*} arr2 
+ */
 function compArrVals(arr1, arr2) {
 	if (!arr1 || !arr2) return false;
 	if (arr1.length != arr2.length) return false;
@@ -55,51 +82,91 @@ function compArrVals(arr1, arr2) {
 	return true;
 }
 
-function predict(callBack_showPre) {
-	lastPre = -1;
+/**
+ * get input array, and check if game is over
+ */
+function getInputArr() {
 	var inputs = [];
 	var cells = gameMgr.grid.cells;
+	var bGameover = true;
 	for (var x = 0; x < cells.length; x++) {
 		var c_x = cells[x];
 		for (var y = 0; y < c_x.length; y++) {
-		var tile = c_x[y];
-		if (tile) {
-			inputs.push(tile.value);
-		} else {
-			inputs.push(0);
-		}
-		}
-	}
-  
-	var trialCnt = 4;
-	for (var mv = 0; mv < trialCnt; mv++) {
-		if (isMovable(inputs, mv)) {
-			break;
+			var tile = c_x[y];
+			if (tile) {
+				inputs.push(tile.value);
+			} else {
+				inputs.push(0);
+				bGameover = false;
+			}
 		}
 	}
-	if (mv = 4) {
+
+	if (bGameover) {
+		inputs = null;
+	}
+	return inputs;
+}
+
+
+/**
+ * predict next step
+ */
+function predict() {
+	lastPredict = -1;
+	var inputs = getInputArr();
+	if (!inputs) {
 		// GameOver
-		setTimeout(function() {restartGame();}, 500);
-		setTimeout(function() {predict();}, 1000);
 		last_inputs = null;
+		BP.playCnt++;
+		BP.lastPlayTrainCnt = BP.trainCnt - BP.lastPlayTrainCnt;
+		BP.lastPlayMatchCnt = BP.matchCnt - BP.lastPlayMatchCnt;
+
+		setTimeout(function() {restartGame();}, 500);
+		setTimeout(function() {predict();}, 700);
 		return false;	
 	}
 
-  var outputs = model.forward(inputs);
-  console.log(outputs);
-  var NM_MIN_VALUE = -99999999;
-  var top_output = NM_MIN_VALUE;
+	var outputs = model.forward(inputs);
+	console.log(outputs);
+	var NM_MIN_VALUE = -99999999;
+	var top_output = NM_MIN_VALUE;
 	
 	for (var i = 0; i < outputs.length; i++) {
 		if (top_output < outputs[i]) {
 			top_output = outputs[i];
-			lastPre = i;
+			lastPredict = i;
 		}
 	}
 
-  last_inputs = inputs;
-  return true;
+  	last_inputs = inputs;
+  	callBack_showPredict(i);
+  	return true;
 }
+
+/**
+ * move once at key-press event
+ * @param {*} e 
+ */
+function moveOnce(e) {
+	var dir = e.keyCode - 37;
+	if (dir < 0 || dir > 3) return false;
+
+	lastMove = -1;
+	if (last_inputs && isMovable(last_inputs, dir)) {
+		
+		lastMove = dir;
+		if (lastPredict == lastMove) {
+			BP.matchCnt++;
+		}
+		
+		BP.trainCnt++;
+		sendKeyEvt(e.keyCode);
+		callBack_showStatus();
+		setTimeout(function() {predict();}, 200);
+	}
+}
+
 
 /**
  * Check if able to move 
@@ -127,57 +194,22 @@ function isMovable(_in_arr16, _dir) {
 	return b_movable;
 }
 
-function proceed1Step(callBack_showStat) {
-	  if (!moveOnce()) {
-		  nextModel();
-	  }
-	  
-	  callBack_showStat();
-}
 
-function proceed1Gen(callBack_showStat) {
-	  if (i_model < 0) {
-		  nextModel();
-	  }
-	  proceed1Step(callBack_showStat);
-		  
-	  if (!model) return;
-	  setTimeout(proceed1Gen, 300, callBack_showStat);
-}
+function start(_callBack_showStatus, _callBack_showPredict) {
+	// link callback functions
+	callBack_showStatus = _callBack_showStatus;
+	callBack_showPredict = _callBack_showPredict;
 
-function makeResultJSON() {
-	EA.sortByScore();
-	var avg = (function() {
-		var tot = 0;
-		for (var i = 0; i < EA.scores.length;i++) {
-			tot += EA.scores[i];
-		}
-		return (tot / EA.scores.length);
-	})();
-	var json = {
-			title:'gen' + EA.generationId + '_top' + EA.scores[0] + '_avg' + avg,
-			generation:EA.generationId,
-			topScore:EA.scores[0],
-			avgScore:avg,
-			models: EA.models,
-			scores : EA.scores
-	};
+	// Add key evt handler
+	document.onkeydown = moveOnce;
 	
-	var a = document.createElement('a');
-	a.setAttribute('href', 'data:text/plain;charset=utf-8,' +
-		encodeURIComponent(JSON.stringify(json)));
-	a.setAttribute('download', json.title + ".json");
+	// Start new game
+	restartGame();
 
-	a.style.display = 'none';
-	document.body.appendChild(a);
-	a.click();
-	document.body.removeChild(a);
+	// predict
+	setTimeout(function() {predict();}, 200);
 }
 
-function evolve() {
-	  EA.evolve();
-	  i_model = -1;
-}
 
 function autoProceed(callBacks, _mutation_ratio, ck_wkar) {
 	if (i_model < 0) {
