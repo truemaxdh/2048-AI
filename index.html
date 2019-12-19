@@ -1,105 +1,56 @@
 <html>
-  <head>
-    <style>
-      .leftPannel {
-        width:350px;
-        height:100%;
-        position:fixed;
-        z-index:1;
-        top:0;
-        left:0;
-        padding-left:20px;
-      }
-      
-      .gamePannel {
-        width:100%;
-        height:100%;
-        padding:0;
-      }
-      
-      .gamePannel iframe {
-        width:100%;
-        height:100%;
-        border:0;
-      }
-      
-      button, textarea {
-      	opacity : 0.7;
-      	background : white;
-      	font-weight: bold;
-      	border: 1px solid black;
-      }
-      
-      /* .rightPannel {
-        width:350px;
-        height:100%;
-        position:fixed;
-        z-index:1;
-        top:0;
-        right:0;
-        padding-left:20px;
-      } */
-    </style>
-    <script src="fnModel.js"></script>
-    <script src="EA.js"></script>
-    <script src="main.js"></script>
-    <script>
-    	
-      function showStatus() {
-    	  try {
-    		  for (var i = 0; i < 4; i++) {
-    	    		var mBtn = document.getElementById("move" + i);
-    	    		if (lastMove == i) 
-    	    			mBtn.style.background = "orange";
-    	    		else 
-    	    			mBtn.style.background = "white";
-    	    	}  
-    		
-    		  document.getElementById("g_id").value = EA.generationId;
-    		  document.getElementById("m_id").value = i_model;
-    		  setTimeout(function() {
-    			  EA.scores[i_model] = gameMgr.score;
-    			  document.getElementById("sc").value = EA.scores[i_model];
-    			  }, 200);
-    		  
-    		  /* var lb = document.getElementById("lastBoards");
-    	    	var addHTML = "<table>";
-    	    	for (var row = 0; row < 4; row++) {
-    	    		addHTML += "<tr>"; 
-    	    		for (var col = 0;col < 4; col++) {
-    	    			addHTML += "<td>" + last_inputs[col * 4 + row] + "</td>";
-    	    		}
-    	    		addHTML += "</tr>";
-    	    	}
-    	    	addHTML += "</table><br>";
-    	    	lb.innerHTML = addHTML + lb.innerHTML;
-    	    	if (lb.innerHTML.length > 900) {
-    	    		var cutPos = lb.innerHTML.lastIndexOf("<table>");
-    	    		lb.innerHTML = lb.innerHTML.substring(0, cutPos);
-    	    	} */
-    	    	
-    	    	
-    	  } catch(err) {
-    		  
-    	  }
-    	
-      }
-            
-      function showGenerationResult() {
-    	  var lb = document.getElementById("lastBoards");
-    	  var html = "<table>";
-    	  
-    	  for (var i = 0; i < EA.models.length; i++) {
-    		  html += "<tr><td>" + i + "</td><td>" + EA.scores[i] + "</td></tr>";  
-    	  }
-    	  html += "</table>";
-    	  lb.innerHTML = html;
-      }
-
-    </script>
-  </head>
-  <body>
-    <a href="./EA/index.html">EA</a>
-    <a href="./BP/index.html">BP</a>
-  </body>
+	<head>
+		<style>
+			body {
+				text-align: center;
+			}
+			button {
+				transition : 0.7s ease all;
+				-moz-transition : 0.7s ease all;
+				-webkit-transition : 0.7s ease all;
+				width : 100px;
+				height : 100px;
+				border-radius : 10px;
+				background : #73AD21;
+				color : white;
+				word-wrap : break-word;
+				font-size : 16px;
+				font-weight : bold;
+				font-height:100px;
+				//float : left;
+				cursor : pointer;
+			}
+			
+			button:hover {
+				transform : scale(1.1, 1.1);
+				-moz-transform : scale(1.1, 1.1);
+				-webkit-transform : scale(1.1, 1.1);
+				transform-origin : center;
+				-moz-transform-origin : center;
+				-webkit-transform-origin : center;
+				transition : transform 1.0s ease all;
+				-moz-transition : transform 1.0s ease all;
+				-webkit-transition : transform 1.0s ease all;
+				background : #21AD73;
+			}
+			div {
+				width:300px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+		<h4>Training</h4>
+		<hr>
+		<button onclick="location.href='./EA/index.html'">Evolution Algorithm</button>
+		<button onclick="location.href='./BP/index.html'">Guided Training</button>
+		</div>
+		<p></p>
+		<div>
+		<h4>Verify</h4>
+		<hr>
+		<button onclick="location.href='./Verify/index.html'">Verify Results</button>
+		<button onclick="location.href='./Test/index.html'">Test<br>Model</button>
+		</div>
+	</body>
 </html>
