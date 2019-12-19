@@ -46,7 +46,7 @@
     <script>
     	function showPredict(_dir) {
         for (var i = 0; i < 4; i++) {
-          var mBtn = document.getElementById("move" + i);
+          var mBtn = document.getElementById("pre" + i);
           if (_dir == i) 
             mBtn.style.background = "orange";
           else 
@@ -54,11 +54,12 @@
         }
       }
 
-      function showStatus() {
+      function showStatus(_dir) {
     	  try {
+          console.log(_dir);
     		  for (var i = 0; i < 4; i++) {
     	    		var mBtn = document.getElementById("move" + i);
-    	    		if (lastMove == i) 
+    	    		if (_dir == i) 
     	    			mBtn.style.background = "orange";
     	    		else 
     	    			mBtn.style.background = "white";
@@ -81,8 +82,8 @@
       <h4>Game Connection</h4>
       <button onclick="connectToGame();">connectToGame</button>
       <h4>Create/Load Weights</h4>
-      <button onclick="createWt();">Create</button>
-      <button onclick="loadWt(document.getElementById('strJson').value);">Load</button>
+      <button onclick="createModel();">Create</button>
+      <button onclick="loadModel(document.getElementById('strJson').value);">Load</button>
       <br>
       <textarea id="strJson"></textarea>
       <h4>Unit Functions</h4>

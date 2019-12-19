@@ -28,6 +28,7 @@ function sendKeyEvt(keyCode) {
 var gameMgr;
 var model = null;
 var last_inputs;
+var last_outputs;
 var lastPredict;
 var lastMove;
 var b_workaround = true;
@@ -50,7 +51,7 @@ function connectToGame() {
 /**
  * create new weights
  */
-function createWt() {
+function createModel() {
   BP.createModel();
 	model = BP.model;
   console.log(BP);
@@ -60,7 +61,7 @@ function createWt() {
  * load weights from json text
  * @param {*} strJson 
  */
-function loadWt(strJson) {
+function loadModel(strJson) {
 	var tmp = JSON.parse(strJson);
 	BP.loadModel(tmp.model, tmp.trainCnt, tmp.matchCnt);
 	model = BP.model;
@@ -94,7 +95,7 @@ function getInputArr() {
 		for (var y = 0; y < c_x.length; y++) {
 			var tile = c_x[y];
 			if (tile) {
-				inputs.push(tile.value);
+				inputs.push(Math.log2(tile.value));
 			} else {
 				inputs.push(0);
 				bGameover = false;
@@ -127,20 +128,20 @@ function predict() {
 		return false;	
 	}
 
-	var outputs = model.forward(inputs);
-	console.log(outputs);
+	last_outputs = model.forward(inputs);
+	console.log(last_outputs);
 	var NM_MIN_VALUE = -99999999;
 	var top_output = NM_MIN_VALUE;
 	
-	for (var i = 0; i < outputs.length; i++) {
-		if (top_output < outputs[i]) {
-			top_output = outputs[i];
+	for (var i = 0; i < last_outputs.length; i++) {
+		if (top_output < last_outputs[i]) {
+			top_output = last_outputs[i];
 			lastPredict = i;
 		}
 	}
 
   	last_inputs = inputs;
-  	callBack_showPredict(i);
+  	callBack_showPredict(lastPredict);
   	return true;
 }
 
@@ -160,9 +161,16 @@ function moveOnce(e) {
 			BP.matchCnt++;
 		}
 		
+		var E = [];
+		for (var i = 0; i < 4; i++) {
+			var err = ((lastMove==i)?1:0) - last_outputs[i];
+			E.push(err);
+		}
+		model.backward(E);
+		console.log(model);
 		BP.trainCnt++;
 		sendKeyEvt(e.keyCode);
-		callBack_showStatus();
+		callBack_showStatus(lastMove);
 		setTimeout(function() {predict();}, 200);
 	}
 }
