@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<script>
+			var arrScores = [];
+			var totCnt = 0;
+			function loadFile(event) {
+				arrScores = [];
+				totCnt = event.target.files.length;
+				
+				var readers = [];
+				for (var i = 0; i < totCnt; i++) {
+					readers.push(new FileReader());
+					readers[i].onload = function() {
+						var json = JSON.parse(this.result);
+						arrScores.push(json.scores);
+						console.log(arrScores);
+						if (arrScores.length == totCnt) {
+							drawGraph();
+						}
+					}	
+					readers[i].readAsText(event.target.files[i]);
+				}
+			}
+			
+			function drawGraph() {
+				console.log("HAHAHA");
+			}
+		</script>
+	</head>
+	<body>
+		<input type="file" onchange="loadFile(event);" multiple>
+		<div id="avg"></div>
+	</body>
+</html>
