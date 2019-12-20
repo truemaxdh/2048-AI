@@ -40,6 +40,7 @@
         padding-left:20px;
       } */
     </style>
+    <script src="../common/common.js"></script>
     <script src="../common/fnModel.js"></script>
     <script src="EA.js"></script>
     <script src="main.js"></script>
@@ -58,24 +59,7 @@
     		  document.getElementById("g_id").value = EA.generationId;
     		  document.getElementById("m_id").value = i_model;
    			  document.getElementById("sc").value = EA.scores[i_model];
-    		  
-    		  /* var lb = document.getElementById("lastBoards");
-    	    	var addHTML = "<table>";
-    	    	for (var row = 0; row < 4; row++) {
-    	    		addHTML += "<tr>"; 
-    	    		for (var col = 0;col < 4; col++) {
-    	    			addHTML += "<td>" + last_inputs[col * 4 + row] + "</td>";
-    	    		}
-    	    		addHTML += "</tr>";
-    	    	}
-    	    	addHTML += "</table><br>";
-    	    	lb.innerHTML = addHTML + lb.innerHTML;
-    	    	if (lb.innerHTML.length > 900) {
-    	    		var cutPos = lb.innerHTML.lastIndexOf("<table>");
-    	    		lb.innerHTML = lb.innerHTML.substring(0, cutPos);
-    	    	} */
-    	    	
-    	    	
+    		      	    	
     	  } catch(err) {
     		  
     	  }
@@ -97,6 +81,7 @@
   </head>
   <body>
     <div class="leftPannel">
+      <h3>Evolution Algorithm<button onclick="location.href='../index.html'">menu</button></h3>
       <h4>Game Connection</h4>
       <button onclick="connectToGame();">connectToGame</button>
       <h4>Create/Load Generation</h4>

@@ -1,17 +1,4 @@
 /**
- * Button and Keyboard Event Generator
- */
-function restartGame() {
-  var btn = document.gameFrm.document.getElementsByClassName("restart-button")[0];
-  btn.click();
-}
-
-// - Left: 37 - Up: 38 - Right: 39 - Down: 40
-function sendKeyEvt(keyCode) {
-  document.gameFrm.document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':keyCode}));
-}
-
-/**
  * Game manager controller
  */
 var gameMgr;
@@ -25,17 +12,6 @@ var lossCnt = 0;
 
 function toggle_wkar(_t_f) {
 	b_workaround=_t_f;
-}
-
-function connectToGame() {
-  if (!gameMgr) {
-    gameMgr = new document.gameFrm.GameManager(
-        4,
-        document.gameFrm.KeyboardInputManager, 
-        document.gameFrm.HTMLActuator, 
-        document.gameFrm.LocalStorageManager);
-    }
-  console.log(gameMgr);
 }
 
 
@@ -60,60 +36,12 @@ function nextModel() {
   model = (i_model >= EA.models.length) ? null : EA.models[i_model];	  
 }
 
-function compArrVals(arr1, arr2) {
-	if (!arr1 || !arr2) return false;
-	if (arr1.length != arr2.length) return false;
-	for (var i = 0; i < arr1.length; i++) {
-		if (arr1[i] != arr2[i]) return false;
-	}
-	return true;
-}
-
-
-/**
- * Check if able to move 
- * @param {*} _in_arr16 
- * @param {*} _dir : 0 - L, 1 - U, 2 - R, 3 - D 
- */
-function isMovable(_in_arr16, _dir) {
-	var dx = (_dir - 1) % 2;
-	var dy = (_dir - 2) % 2;
-	var b_movable = false;
-	//console.log(dx + "," + dy);
-	for (var i = 0; i < _in_arr16.length; i++) {
-		if (!_in_arr16[i]) continue;
-		var nx = (i / 4 | 0) + dx;
-		var ny = (i % 4) + dy;
-		if (nx < 0 || nx >= 4 || ny < 0 || ny >= 4) continue;
-		var i_new = 4 * nx + ny;
-		//console.log(i + ":" + _in_arr16[i] + "->" + i_new + ":" + _in_arr16[i_new]);
-		if (!_in_arr16[i_new] || _in_arr16[i] == _in_arr16[i_new]) {
-			b_movable = true;
-			break;
-		}	
-	}
-
-	return b_movable;
-}
-
 
 function moveOnce() {
 	lastMove = -1;
-  var inputs = [];
-  var cells = gameMgr.grid.cells;
-  for (var x = 0; x < cells.length; x++) {
-    var c_x = cells[x];
-    for (var y = 0; y < c_x.length; y++) {
-      var tile = c_x[y];
-      if (tile) {
-        inputs.push(tile.value);
-      } else {
-        inputs.push(0);
-      }
-    }
-  }
+  var inputs = getInputArr();
   
-  if (compArrVals(last_inputs, inputs)) {
+  if (arrCompare(last_inputs, inputs)) {
 	  //console.log(last_inputs);
 	  //console.log(inputs);
 	  //console.log("go to next model");
@@ -195,15 +123,7 @@ function makeResultJSON() {
 			scores : EA.scores
 	};
 	
-	var a = document.createElement('a');
-	a.setAttribute('href', 'data:text/plain;charset=utf-8,' +
-		encodeURIComponent(JSON.stringify(json)));
-	a.setAttribute('download', json.title + ".json");
-
-	a.style.display = 'none';
-	document.body.appendChild(a);
-	a.click();
-	document.body.removeChild(a);
+	downloadJson(json, json.title + ".json");
 }
 
 function evolve() {
