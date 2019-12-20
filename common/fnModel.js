@@ -1,3 +1,11 @@
+function cutOff(val, digitsUnder) {
+	digitsUnder || (digitsUnder = 7);
+	//console.log(val);
+	val = Math.floor(val * Math.pow(10, digitsUnder)) / Math.pow(10, digitsUnder);
+	//console.log(val);
+	return val;
+}
+
 function fnModel() {
   this.wt_in_hi = [];
   this.wt_hi_hi = [];
@@ -16,12 +24,13 @@ function fnModel() {
     this._fill_wt_rndNums(this.wt_hi_out, 1, hidden_sz_2d[1], output_sz);
   };
   this._fill_wt_rndNums = function(wt, layer, row, col) {
+    var range = 1 / Math.sqrt(row);
     for (var l = 0; l < layer; l++) {
       wt.push([]);
       for (var r = 0; r < row; r++) {
         wt[l].push([]);
         for (var c = 0; c < col; c++) {
-          wt[l][r].push(Math.floor((Math.random() * 2.0 - 1.0) * 10000000) / 10000000);
+          wt[l][r].push(cutOff((Math.random() * 2.0 - 1.0) * range));
         }
       }
     }
@@ -68,7 +77,10 @@ function fnModel() {
   }
   this.backward = function(E) {
     var E_new = this._back1stepErr(E, this.wt_hi_out[0]);
+    //console.log(this.i_out[0]);
+    //console.log(this.wt_hi_out[0][0][0]);
     this._back1step(E, this.wt_hi_out[0], this.i_out[0]);
+    //console.log(this.wt_hi_out[0][0][0]);
     E=E_new;
     for (var i = this.wt_hi_hi.length - 1; i >= 0; i--) {
       E_new = this._back1stepErr(E, this.wt_hi_hi[i]);
@@ -85,7 +97,7 @@ function fnModel() {
         tot += wt[j][i];
       }
       for (var j = 0; j < wt.length; j++) {
-        E_new += E[i] * wt[j][i] / tot;
+        E_new[j] += E[i] * wt[j][i] / tot;
       }
     }
     return E_new;
@@ -93,11 +105,15 @@ function fnModel() {
   this._back1step = function(E, wt, I) {
     // sample of wt_hi_out
     //console.log(I);
+    //console.log(E);
     for(var i = 0; i < E.length; i++) {
       if (I[i] > 0) {
         var d = - this.learningRate * E[i];
+        //console.log(d);
         for (var j = 0; j < wt.length; j++) {
+          //console.log(wt[j][i]);
           wt[j][i] -= d;
+          //console.log(wt[j][i]);
         }
       }
     
