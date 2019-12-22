@@ -12,7 +12,8 @@ var GT = {
     this.lastPlayTrainCnt = 0;
     this.lastPlayMatchCnt = 0;
     this.model = new fnModel();
-    this.model.initWithSizes(16, [3,16],4);
+    //this.model.initWithSizes(16, [3,16],4);
+    this.model.initWithSizes(16, [3,2],4);
   },
   loadModel: function(model, trainCnt, matchCnt, playCnt, lastPlayTrainCnt, lastPlayMatchCnt) {
     this.trainCnt = trainCnt;
