@@ -14,17 +14,32 @@ var callBack_showStatus, callBack_showPredict;
  * load weights from json text
  * @param {*} strJson 
  */
-function loadModel(strJson) {
-	var tmp = JSON.parse(strJson);
+function loadModel(jsonPath) {
+	console.log(jsonPath);
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4) {
+		if (this.status == 200) {
+			// SUCCESS
+			var strJson = this.responseText;
+			var tmp = JSON.parse(strJson);
 
-	model = new fnModel();
-	if (tmp.model.wt_input) {
-		model.initWithBaseWeights(tmp.model.wt_input, tmp.model.wt_hidden, tmp.model.wt_output);
-	} else {
-		model.initWithBaseWeights(tmp.model.wt_in_hi, tmp.model.wt_hi_hi, tmp.model.wt_hi_out);
+			model = new fnModel();
+			if (tmp.model.wt_input) {
+				model.initWithBaseWeights(tmp.model.wt_input, tmp.model.wt_hidden, tmp.model.wt_output);
+			} else {
+				model.initWithBaseWeights(tmp.model.wt_in_hi, tmp.model.wt_hi_hi, tmp.model.wt_hi_out);
+			}
+			
+			console.log(model);
+		} else {
+			alert("failed to load data");
+		}
+		}
 	}
+	xhttp.open("GET", jsonPath, true);
+	xhttp.send();
 	
-	console.log(model);
 }
 
 
@@ -47,7 +62,7 @@ function predictAndMove() {
 			lastMove = i;
 		}
 	}
-	console.log(lastMove);
+	console.log(last_outputs);
 	
 	if (lastMove == -1) {
 		// GameOver
