@@ -1,4 +1,17 @@
 /**
+ * cut off digit under period
+ * @param {*} val 
+ * @param {*} digitsUnder 
+ */
+function cutOff(val, digitsUnder) {
+	digitsUnder || (digitsUnder = 7);
+	//console.log(val);
+	val = Math.floor(val * Math.pow(10, digitsUnder)) / Math.pow(10, digitsUnder);
+	//console.log(val);
+	return val;
+}
+
+/**
  * ===================================
  * Button and Keyboard Event Generator
  * ===================================
@@ -36,6 +49,8 @@ if (!gameMgr) {
 console.log(gameMgr);
 }
 
+
+
   
 /**
  * ===
@@ -49,18 +64,29 @@ console.log(gameMgr);
 function getInputArr() {
 	var inputs = [];
 	var cells = gameMgr.grid.cells;
+	var max = 0;
 	for (var x = 0; x < cells.length; x++) {
 		var c_x = cells[x];
 		for (var y = 0; y < c_x.length; y++) {
 			var tile = c_x[y];
 			if (tile) {
-				inputs.push(Math.log2(tile.value));
+				var ln2 = Math.log2(tile.value)
+				inputs.push(ln2);
+				if (max < ln2) {max = ln2};
 			} else {
 				inputs.push(0);
 			}
 		}
 	}
-
+	for (var i = 0; i < inputs.length; i++) {
+		if (!inputs[i]) {
+			inputs[i] = 0.01;
+		} else if (inputs[i] == max) {
+			inputs[i] = 0.99;
+		} else {
+			inputs[i] = cutOff(inputs[i] / max, 2);
+		}
+	}
 	return inputs;
 }
 
@@ -92,13 +118,13 @@ function isMovable(_in_arr16, _dir) {
 	var b_movable = false;
 	//console.log(dx + "," + dy);
 	for (var i = 0; i < _in_arr16.length; i++) {
-		if (!_in_arr16[i]) continue;
+		if (_in_arr16[i]==0.01) continue;
 		var nx = (i / 4 | 0) + dx;
 		var ny = (i % 4) + dy;
 		if (nx < 0 || nx >= 4 || ny < 0 || ny >= 4) continue;
 		var i_new = 4 * nx + ny;
 		//console.log(i + ":" + _in_arr16[i] + "->" + i_new + ":" + _in_arr16[i_new]);
-		if (!_in_arr16[i_new] || _in_arr16[i] == _in_arr16[i_new]) {
+		if (_in_arr16[i_new] == 0.01 || _in_arr16[i] == _in_arr16[i_new]) {
 			b_movable = true;
 			break;
 		}	
@@ -107,6 +133,17 @@ function isMovable(_in_arr16, _dir) {
 	return b_movable;
 }
 
+/**
+ * check game out
+ * @param {*} inputs 
+ */
+function isGameOut(inputs) {
+	var _dir = 0;
+	for (; _dir < 4; _dir++) {
+		if (isMovable(inputs, _dir)) break;
+	}
+	return (_dir == 4);
+}
 
 /**
  * Download JSON

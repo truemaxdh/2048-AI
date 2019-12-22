@@ -1,18 +1,10 @@
-function cutOff(val, digitsUnder) {
-	digitsUnder || (digitsUnder = 7);
-	//console.log(val);
-	val = Math.floor(val * Math.pow(10, digitsUnder)) / Math.pow(10, digitsUnder);
-	//console.log(val);
-	return val;
-}
-
 function fnModel() {
   this.wt_in_hi = [];
   this.wt_hi_hi = [];
   this.wt_hi_out = [];
   this.i_hid = [];
   this.i_out = [];
-  this.learningRate = 0.1;
+  this.learningRate = 0.01;
   this.initWithBaseWeights = function(wt_base_in_hi, wt_base_hi_hi, wt_base_hi_out) {
     this.wt_in_hi = wt_base_in_hi.map((x)=>x);
     this.wt_hi_hi = wt_base_hi_hi.map((x)=>x);
@@ -30,7 +22,7 @@ function fnModel() {
       for (var r = 0; r < row; r++) {
         wt[l].push([]);
         for (var c = 0; c < col; c++) {
-          wt[l][r].push(cutOff((Math.random() * 2.0 - 1.0) * range));
+          wt[l][r].push(cutOff(Math.random() * range) + 0.0000001);
         }
       }
     }
@@ -77,10 +69,7 @@ function fnModel() {
   }
   this.backward = function(E) {
     var E_new = this._back1stepErr(E, this.wt_hi_out[0]);
-    //console.log(this.i_out[0]);
-    //console.log(this.wt_hi_out[0][0][0]);
     this._back1step(E, this.wt_hi_out[0], this.i_out[0]);
-    //console.log(this.wt_hi_out[0][0][0]);
     E=E_new;
     for (var i = this.wt_hi_hi.length - 1; i >= 0; i--) {
       E_new = this._back1stepErr(E, this.wt_hi_hi[i]);
@@ -104,16 +93,11 @@ function fnModel() {
   }
   this._back1step = function(E, wt, I) {
     // sample of wt_hi_out
-    //console.log(I);
-    //console.log(E);
     for(var i = 0; i < E.length; i++) {
       if (I[i] > 0) {
         var d = - this.learningRate * E[i];
-        //console.log(d);
         for (var j = 0; j < wt.length; j++) {
-          //console.log(wt[j][i]);
           wt[j][i] -= d;
-          //console.log(wt[j][i]);
         }
       }
     
