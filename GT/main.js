@@ -2,7 +2,8 @@
  * Game manager controller
  */
 var gameMgr;
-var model = null;
+//var model = null;
+var models = [];
 var last_inputs;
 var last_outputs;
 var lastPredict;
@@ -13,17 +14,17 @@ var callBack_showStatus, callBack_showPredict;
 /**
  * create new weights
  */
-function createModel() {
-  GT.createModel();
-	model = GT.model;
-  console.log(GT);
+function createModel(_gt) {
+  _gt.createModel();
+  models.push(_gt);
+  console.log(_gt);
 }
 
 /**
  * load weights from json text
  * @param {*} strJson 
  */
-function loadModel(jsonPath) {
+function loadModel(_gt, jsonPath) {
 	console.log(jsonPath);
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
@@ -32,9 +33,9 @@ function loadModel(jsonPath) {
 			// SUCCESS
 			var strJson = this.responseText;
 			var tmp = JSON.parse(strJson);
-			GT.loadModel(tmp.model, tmp.trainCnt, tmp.matchCnt, tmp.playCnt, tmp.lastPlayTrainCnt, tmp.lastPlayMatchCnt);
-			model = GT.model;
-			console.log(GT);
+			_gt.loadModel(tmp.model, tmp.trainCnt, tmp.matchCnt, tmp.playCnt, tmp.lastPlayTrainCnt, tmp.lastPlayMatchCnt);
+			models.push(_gt);
+			console.log(_gt);
 		} else {
 			alert("failed to load data");
 		}
@@ -45,7 +46,7 @@ function loadModel(jsonPath) {
 }
 
 function saveModel() {
-	downloadJson(GT, "playCnt" + GT.playCnt + ".json");
+	downloadJson(_gt, "playCnt" + _gt.playCnt + ".json");
 }
 
 
@@ -53,7 +54,7 @@ function saveModel() {
  * predict next step
  */
 function predict() {
-	lastPredict = -1;
+	lastPredict = [];
 	var _inputs = getInputArr();
 	//console.log(_inputs);
 	if (isGameOut(_inputs)) {
@@ -66,20 +67,25 @@ function predict() {
 	} */
 	
 	last_inputs = _inputs;
-	for (var lg = 0; lg < model.wt_hi_out[0].length; lg++) {
-		console.log(model.wt_hi_out[0][lg]);
-	}	
-	last_outputs = model.forward(last_inputs);
-	console.log(last_outputs);
-	var NM_MIN_VALUE = -99999999;
-	var top_output = 0;
-	
-	for (var i = 0; i < last_outputs.length; i++) {
-		if (top_output < last_outputs[i]) {
-			top_output = last_outputs[i];
-			lastPredict = i;
+	last_outputs = [];
+	for (var modelId = 0; modelId < models.length; modelId++) {
+		lastPredict.push(-1);
+		for (var lg = 0; lg < model.wt_hi_out[0].length; lg++) {
+			console.log(models[modelId].wt_hi_out[0][lg]);
+		}	
+		last_outputs.push(models[modelId].forward(last_inputs));
+		console.log(last_outputs[modelId]);
+		var NM_MIN_VALUE = -99999999;
+		var top_output = 0;
+		
+		for (var i = 0; i < last_outputs.length; i++) {
+			if (top_output < last_outputs[i]) {
+				top_output = last_outputs[i];
+				lastPredict[modelId] = i;
+			}
 		}
 	}
+	
 
   	//last_inputs = inputs;
   	callBack_showPredict(lastPredict);
@@ -98,22 +104,24 @@ function moveOnce(e) {
 		return afterGameOut();
 	}
 
-	lastMove = -1;
+	lastMove = []];
 	if (last_inputs && isMovable(last_inputs, dir)) {
 		
 		lastMove = dir;
-		if (lastPredict == lastMove) {
-			GT.matchCnt++;
+		for (var modelId = 0; modelId < models.length; modelId++) {
+			if (lastPredict[modelId] == lastMove) {
+				models[modelId].matchCnt++;
+			}
+			var E = [];
+			for (var i = 0; i < 4; i++) {
+				var err = ((lastMove==i)?1:0) - last_outputs[modelId][i];
+				E.push(err);
+			}
+			models[modelId].backward(E);
+			//console.log(model);
+			models[modelId].trainCnt++;
 		}
 		
-		var E = [];
-		for (var i = 0; i < 4; i++) {
-			var err = ((lastMove==i)?1:0) - last_outputs[i];
-			E.push(err);
-		}
-		model.backward(E);
-		//console.log(model);
-		GT.trainCnt++;
 		sendKeyEvt(e.keyCode);
 		callBack_showStatus(lastMove);
 		setTimeout(function() {predict();}, 200);
