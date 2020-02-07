@@ -38,6 +38,4 @@ class GT {
   }
 }
 
-var GT_4x2 = new GT(4,2);
-var GT_2x16 = new GT(2,16);
-var GT_3x16 = new GT(3,16);
+var GTStore = [new GT(4,2), new GT(2,16), new GT(3,16), new GT(4,16)];
