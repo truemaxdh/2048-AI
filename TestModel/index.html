@@ -50,6 +50,12 @@
     	
       }
       
+      function onLoadClick() {
+        var elSz=document.getElementById("size");
+        var path = "../results/guided/size" + elSz.value + "/sz" + elSz.value + 
+          "playCnt" + document.getElementById("playCnt").value + ".json";
+        loadModel(GTStore[elSz.selectedIndex], path);
+      }
     </script>
   </head>
   <body>
@@ -58,7 +64,14 @@
       <h4>Game Connection</h4>
       <button onclick="connectToGame();">connectToGame</button>
       <h4>Load Weights</h4>
-      ../results/guided/size4x2/playCnt
+      ../results/guided/size
+      <select id="size" onchange="document.getElementById('sz').innerText = this.value;">
+        <option>4x2</option>
+        <option>2x16</option>
+        <option>3x16</option>
+        <option>4x16</option>
+      </select>
+      /sz<div id="sz">4x2</div>playCnt
       <select id="playCnt">
           <option>0</option>
           <option>1</option>
@@ -72,7 +85,7 @@
           <option>9</option>
           <option>10</option>
       </select>
-      <button onclick="loadModel('../results/guided/size4x2/playCnt' + document.getElementById('playCnt').value + '.json');">Load</button>
+      <button onclick="onLoadClick();">Load</button>
       <h4>Unit Functions</h4>
       <button onclick="start(showStatus);">start</button>
       <h4>Options</h4>
