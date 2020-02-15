@@ -38,15 +38,18 @@ function fnModel() {
     this.i_out = [];
     var arr_calc = this._mat_mul(inputs, this.wt_in_hi[0]);
     this.i_hid.push(arr_calc);
-    arr_calc = this._ReLU(arr_calc);
+    //arr_calc = this._ReLU(arr_calc);
+    arr_calc = this._ELU(arr_calc);
     for (var l = 0; l < this.wt_hi_hi.length; l++) {
       arr_calc = this._mat_mul(arr_calc, this.wt_hi_hi[l]);
       this.i_hid.push(arr_calc);
-      arr_calc = this._ReLU(arr_calc);  
+      //arr_calc = this._ReLU(arr_calc);  
+      arr_calc = this._ELU(arr_calc);  
     }
     arr_calc = this._mat_mul(arr_calc, this.wt_hi_out[0]);
     this.i_out.push(arr_calc);
     arr_calc = this._ReLU(arr_calc);
+    arr_calc = this._ELU(arr_calc);
     return arr_calc;
   };
   this._mat_mul = function(arr_in, arr_wt) {
@@ -66,7 +69,16 @@ function fnModel() {
     }
   
     return arr_out;
-  }
+  };
+  this._ELU = function(arr) {
+    var arr_out = [];
+    // Apply ELU
+    for (var i = 0; i < arr.length; i++) {
+      arr_out.push((arr[i] > 0) ? arr[i] : (Math.exp(arr[i]) - 1);
+    }
+  
+    return arr_out;
+  };
   this.backward = function(E) {
     var E_new = this._back1stepErr(E, this.wt_hi_out[0]);
     this._back1step(E, this.wt_hi_out[0], this.i_out[0]);
@@ -77,7 +89,7 @@ function fnModel() {
       E=E_new;  
     }
     this._back1step(E, this.wt_in_hi[0], this.i_hid[0]);
-  },
+  };
   this._back1stepErr = function(E, wt) {
     var E_new = new Array(wt.length).fill(0);
     for (var i = 0; i < wt[0].length; i++) {
@@ -90,17 +102,24 @@ function fnModel() {
       }
     }
     return E_new;
-  }
+  };
   this._back1step = function(E, wt, I) {
     // sample of wt_hi_out
     for(var i = 0; i < E.length; i++) {
+
+      /*
+      // ReLU
       var d = this.learningRate * E[i];
-      if (I[i] > 0 || d > 0) {
+      if (I[i] > 0) {
         for (var j = 0; j < wt.length; j++) {
           wt[j][i] += d;
         }
+      }*/
+      // ELU
+      var d = this.learningRate * E[i] * (I[i] > 0) ? 1 : Math.exp(I[i]);
+      for (var j = 0; j < wt.length; j++) {
+        wt[j][i] += d;
       }
-    
     }
-  }
+  };
 }
