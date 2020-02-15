@@ -117,7 +117,7 @@ function moveOnce(e) {
 			}
 			var E = [];
 			for (var i = 0; i < 4; i++) {
-				var err = ((lastMove==i)?1:0) - last_outputs[modelId][i];
+				var err = ((lastMove==i)?0.99:0.01) - last_outputs[modelId][i];
 				E.push(err);
 			}
 			models[modelId].backward(E);
