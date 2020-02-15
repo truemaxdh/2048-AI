@@ -94,10 +94,10 @@ function fnModel() {
   this._back1step = function(E, wt, I) {
     // sample of wt_hi_out
     for(var i = 0; i < E.length; i++) {
-      if (I[i] > 0) {
-        var d = - this.learningRate * E[i];
+      var d = this.learningRate * E[i];
+      if (I[i] > 0 || d > 0) {
         for (var j = 0; j < wt.length; j++) {
-          wt[j][i] -= d;
+          wt[j][i] += d;
         }
       }
     
