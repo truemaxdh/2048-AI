@@ -74,7 +74,7 @@ function fnModel() {
     var arr_out = [];
     // Apply ELU
     for (var i = 0; i < arr.length; i++) {
-      arr_out.push((arr[i] > 0) ? arr[i] : (Math.exp(arr[i]) - 1);
+      arr_out.push((arr[i] > 0) ? arr[i] : (Math.exp(arr[i]) - 1));
     }
   
     return arr_out;
