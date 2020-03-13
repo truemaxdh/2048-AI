@@ -116,7 +116,7 @@ function fnModel() {
         }
       }*/
       // ELU
-      var d = this.learningRate * E[i] * (I[i] > 0) ? 1 : Math.exp(I[i]);
+      var d = this.learningRate * E[i] * ((I[i] > 0) ? 1 : Math.exp(I[i]));
       for (var j = 0; j < wt.length; j++) {
         wt[j][i] += d;
       }
