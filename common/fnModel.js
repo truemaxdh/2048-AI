@@ -115,21 +115,22 @@ function fnModel() {
     return E_new;
   };
   this._back1step = function(E, wt, I) {
-    // sample of wt_hi_out
     for(var i = 0; i < E.length; i++) {
-      // ReLU
-      var d = this.learningRate * E[i];
-      if (I[i] > 0) {
+      if (this.activation=="ReLU") {
+        // ReLU
+        var d = this.learningRate * E[i];
+        if (I[i] > 0) {
+          for (var j = 0; j < wt.length; j++) {
+            wt[j][i] += d;
+          }
+        }
+      } else {
+        // ELU
+        var d = this.learningRate * E[i] * ((I[i] >= 0) ? 1 : Math.exp(I[i]));
         for (var j = 0; j < wt.length; j++) {
           wt[j][i] += d;
         }
       }
-      /*
-      // ELU
-      var d = this.learningRate * E[i] * ((I[i] >= 0) ? 1 : Math.exp(I[i]));
-      for (var j = 0; j < wt.length; j++) {
-        wt[j][i] += d;
-      }*/
     }
   };
 }
