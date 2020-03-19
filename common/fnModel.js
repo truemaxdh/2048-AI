@@ -5,22 +5,24 @@ function fnModel() {
   this.i_hid = [];
   this.i_out = [];
   this.learningRate = 0.001;
+  this.activation="ReLU";
+  //this.activation="ELU";
   this.initWithBaseWeights = function(wt_base_in_hi, wt_base_hi_hi, wt_base_hi_out) {
     this.wt_in_hi = wt_base_in_hi.map((x)=>x);
     this.wt_hi_hi = wt_base_hi_hi.map((x)=>x);
     this.wt_hi_out = wt_base_hi_out.map((x)=>x);
-    this.learningRate = 1 / Math.pow(10, this.wt_hi_hi.length);
+    //this.learningRate = 1 / Math.pow(10, this.wt_hi_hi.length);
     //console.log("learningRate:" + this.learningRate + ",wt_hi_hi.length:" + this.wt_hi_hi.length);
   };
   this.initWithSizes = function(input_sz, hidden_sz_2d, output_sz) {
     this._fill_wt_rndNums(this.wt_in_hi, 1, input_sz, hidden_sz_2d[1]);
     this._fill_wt_rndNums(this.wt_hi_hi, hidden_sz_2d[0], hidden_sz_2d[1], hidden_sz_2d[1]);
     this._fill_wt_rndNums(this.wt_hi_out, 1, hidden_sz_2d[1], output_sz);
-    this.learningRate = 1 / Math.pow(10, this.wt_hi_hi.length);
+    //this.learningRate = 1 / Math.pow(10, this.wt_hi_hi.length);
     //console.log("learningRate:" + this.learningRate + ",wt_hi_hi.length:" + this.wt_hi_hi.length);
   };
   this._fill_wt_rndNums = function(wt, layer, row, col) {
-    var range = 1 / Math.sqrt(row);
+    var range = 1 / Math.sqrt(row * 2);
     for (var l = 0; l < layer; l++) {
       wt.push([]);
       for (var r = 0; r < row; r++) {
@@ -50,13 +52,15 @@ function fnModel() {
     for (var l = 0; l < this.wt_hi_hi.length; l++) {
       arr_calc = this._mat_mul(arr_calc, this.wt_hi_hi[l]);
       this.i_hid.push(arr_calc);
+      arr_calc = (this.activation=="ReLU") ? this._ReLU(arr_calc):this._ELU(arr_calc);
       //arr_calc = this._ReLU(arr_calc);  
-      arr_calc = this._ELU(arr_calc);  
+      //arr_calc = this._ELU(arr_calc);  
     }
     arr_calc = this._mat_mul(arr_calc, this.wt_hi_out[0]);
     this.i_out.push(arr_calc);
-    arr_calc = this._ReLU(arr_calc);
-    arr_calc = this._ELU(arr_calc);
+    arr_calc = (this.activation=="ReLU") ? this._ReLU(arr_calc):this._ELU(arr_calc);
+    //arr_calc = this._ReLU(arr_calc);
+    //arr_calc = this._ELU(arr_calc);
     return arr_calc;
   };
   this._mat_mul = function(arr_in, arr_wt) {
@@ -113,20 +117,19 @@ function fnModel() {
   this._back1step = function(E, wt, I) {
     // sample of wt_hi_out
     for(var i = 0; i < E.length; i++) {
-
-      /*
       // ReLU
       var d = this.learningRate * E[i];
       if (I[i] > 0) {
         for (var j = 0; j < wt.length; j++) {
           wt[j][i] += d;
         }
-      }*/
+      }
+      /*
       // ELU
       var d = this.learningRate * E[i] * ((I[i] >= 0) ? 1 : Math.exp(I[i]));
       for (var j = 0; j < wt.length; j++) {
         wt[j][i] += d;
-      }
+      }*/
     }
   };
 }
