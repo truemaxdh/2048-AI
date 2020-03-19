@@ -4,10 +4,11 @@
  * @param {*} digitsUnder 
  */
 function cutOff(val, digitsUnder) {
+	/*
+	// do not use temporarily
 	digitsUnder || (digitsUnder = 7);
-	//console.log(val);
 	val = Math.floor(val * Math.pow(10, digitsUnder)) / Math.pow(10, digitsUnder);
-	//console.log(val);
+	*/
 	return val;
 }
 
