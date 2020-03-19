@@ -10,14 +10,14 @@ function fnModel() {
     this.wt_hi_hi = wt_base_hi_hi.map((x)=>x);
     this.wt_hi_out = wt_base_hi_out.map((x)=>x);
     this.learningRate = 1 / Math.pow(10, this.wt_hi_hi.length);
-    console.log("learningRate:" + this.learningRate + ",wt_hi_hi.length:" + this.wt_hi_hi.length);
+    //console.log("learningRate:" + this.learningRate + ",wt_hi_hi.length:" + this.wt_hi_hi.length);
   };
   this.initWithSizes = function(input_sz, hidden_sz_2d, output_sz) {
     this._fill_wt_rndNums(this.wt_in_hi, 1, input_sz, hidden_sz_2d[1]);
     this._fill_wt_rndNums(this.wt_hi_hi, hidden_sz_2d[0], hidden_sz_2d[1], hidden_sz_2d[1]);
     this._fill_wt_rndNums(this.wt_hi_out, 1, hidden_sz_2d[1], output_sz);
     this.learningRate = 1 / Math.pow(10, this.wt_hi_hi.length);
-    console.log("learningRate:" + this.learningRate + ",wt_hi_hi.length:" + this.wt_hi_hi.length);
+    //console.log("learningRate:" + this.learningRate + ",wt_hi_hi.length:" + this.wt_hi_hi.length);
   };
   this._fill_wt_rndNums = function(wt, layer, row, col) {
     var range = 1 / Math.sqrt(row);
@@ -26,10 +26,10 @@ function fnModel() {
       for (var r = 0; r < row; r++) {
         wt[l].push([]);
         for (var c = 0; c < col; c++) {
-          //wt[l][r].push(cutOff(Math.random() * range) + 0.0000001);
-          var rnd = range * (Math.random() * 2  - 1);
+          wt[l][r].push(cutOff(Math.random() * range) + 0.0000001);
+          /*var rnd = range * (Math.random() * 2  - 1);
           if (rnd==0) rnd = 0.0000001;
-          wt[l][r].push(rnd);
+          wt[l][r].push(rnd);*/
         }
       }
     }
