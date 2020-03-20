@@ -22,13 +22,14 @@ function fnModel() {
     //console.log("learningRate:" + this.learningRate + ",wt_hi_hi.length:" + this.wt_hi_hi.length);
   };
   this._fill_wt_rndNums = function(wt, layer, row, col) {
-    var range = 1 / Math.sqrt(row * 2);
+    var range = 1 / Math.sqrt(row / 2.0);
     for (var l = 0; l < layer; l++) {
       wt.push([]);
       for (var r = 0; r < row; r++) {
         wt[l].push([]);
         for (var c = 0; c < col; c++) {
-          wt[l][r].push(cutOff(Math.random() * range) + 0.0000001);
+          //wt[l][r].push(cutOff(Math.random() * range) + 0.0000001);
+          wt[l][r].push(Math.random() * range);
           /*var rnd = range * (Math.random() * 2  - 1);
           if (rnd==0) rnd = 0.0000001;
           wt[l][r].push(rnd);*/
