@@ -19,12 +19,12 @@ function getGaussianRandom(mean, standardDeviation) {
  * @param {*} digitsUnder 
  */
 function cutOff(val, digitsUnder) {
-	/*
-	// do not use temporarily
-	digitsUnder || (digitsUnder = 7);
-	val = Math.floor(val * Math.pow(10, digitsUnder)) / Math.pow(10, digitsUnder);
-	*/
-	return val;
+  /*
+  // do not use temporarily
+  digitsUnder || (digitsUnder = 7);
+  val = Math.floor(val * Math.pow(10, digitsUnder)) / Math.pow(10, digitsUnder);
+  */
+  return val;
 }
 
 /**
@@ -37,8 +37,8 @@ function cutOff(val, digitsUnder) {
   * restart game
   */
  function restartGame() {
-	var btn = document.gameFrm.document.getElementsByClassName("restart-button")[0];
-	btn.click();
+  var btn = document.gameFrm.document.getElementsByClassName("restart-button")[0];
+  btn.click();
   }
   
   
@@ -48,7 +48,7 @@ function cutOff(val, digitsUnder) {
  * @param {*} keyCode 
  */
 function sendKeyEvt(keyCode) {
-	document.gameFrm.document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':keyCode}));
+  document.gameFrm.document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':keyCode}));
 }
 
 /**
@@ -56,13 +56,14 @@ function sendKeyEvt(keyCode) {
  */
 function connectToGame() {
 if (!gameMgr) {
-	gameMgr = new document.gameFrm.GameManager(
-		4,
-		document.gameFrm.KeyboardInputManager, 
-		document.gameFrm.HTMLActuator, 
-		document.gameFrm.LocalStorageManager);
-	}
-console.log(gameMgr);
+  gameMgr = new document.gameFrm.GameManager(
+    4,
+    document.gameFrm.KeyboardInputManager, 
+    document.gameFrm.HTMLActuator, 
+    document.gameFrm.LocalStorageManager);
+  }
+  console.log(gameMgr);
+  console.log(document.gameFrm);
 }
 
 
@@ -78,32 +79,32 @@ console.log(gameMgr);
  * Retrieve input array
  */
 function getInputArr() {
-	var inputs = [];
-	var cells = gameMgr.grid.cells;
-	var max = 0;
-	for (var x = 0; x < cells.length; x++) {
-		var c_x = cells[x];
-		for (var y = 0; y < c_x.length; y++) {
-			var tile = c_x[y];
-			if (tile) {
-				var ln2 = Math.log2(tile.value)
-				inputs.push(ln2);
-				if (max < ln2) {max = ln2};
-			} else {
-				inputs.push(0);
-			}
-		}
-	}
-	for (var i = 0; i < inputs.length; i++) {
-		if (!inputs[i]) {
-			inputs[i] = 0.00000001;
-		} else if (inputs[i] == max) {
-			inputs[i] = 0.99999999;
-		} else {
-			inputs[i] = cutOff(inputs[i] / max, 2);
-		}
-	}
-	return inputs;
+  var inputs = [];
+  var cells = gameMgr.grid.cells;
+  var max = 0;
+  for (var x = 0; x < cells.length; x++) {
+    var c_x = cells[x];
+    for (var y = 0; y < c_x.length; y++) {
+      var tile = c_x[y];
+      if (tile) {
+        var ln2 = Math.log2(tile.value)
+        inputs.push(ln2);
+        if (max < ln2) {max = ln2};
+      } else {
+        inputs.push(0);
+      }
+    }
+  }
+  for (var i = 0; i < inputs.length; i++) {
+    if (!inputs[i]) {
+      inputs[i] = 0.00000001;
+    } else if (inputs[i] == max) {
+      inputs[i] = 0.99999999;
+    } else {
+      inputs[i] = cutOff(inputs[i] / max, 2);
+    }
+  }
+  return inputs;
 }
 
 
@@ -114,12 +115,12 @@ function getInputArr() {
  * @param {*} arr2 
  */
 function arrCompare(arr1, arr2) {
-	if (!arr1 || !arr2) return false;
-	if (arr1.length != arr2.length) return false;
-	for (var i = 0; i < arr1.length; i++) {
-		if (arr1[i] != arr2[i]) return false;
-	}
-	return true;
+  if (!arr1 || !arr2) return false;
+  if (arr1.length != arr2.length) return false;
+  for (var i = 0; i < arr1.length; i++) {
+    if (arr1[i] != arr2[i]) return false;
+  }
+  return true;
 }
 
 
@@ -129,24 +130,24 @@ function arrCompare(arr1, arr2) {
  * @param {*} _dir : 0 - L, 1 - U, 2 - R, 3 - D 
  */
 function isMovable(_in_arr16, _dir) {
-	var dx = (_dir - 1) % 2;
-	var dy = (_dir - 2) % 2;
-	var b_movable = false;
-	//console.log(dx + "," + dy);
-	for (var i = 0; i < _in_arr16.length; i++) {
-		if (_in_arr16[i]==0.01) continue;
-		var nx = (i / 4 | 0) + dx;
-		var ny = (i % 4) + dy;
-		if (nx < 0 || nx >= 4 || ny < 0 || ny >= 4) continue;
-		var i_new = 4 * nx + ny;
-		//console.log(i + ":" + _in_arr16[i] + "->" + i_new + ":" + _in_arr16[i_new]);
-		if (_in_arr16[i_new] == 0.00000001 || _in_arr16[i] == _in_arr16[i_new]) {
-			b_movable = true;
-			break;
-		}	
-	}
+  var dx = (_dir - 1) % 2;
+  var dy = (_dir - 2) % 2;
+  var b_movable = false;
+  //console.log(dx + "," + dy);
+  for (var i = 0; i < _in_arr16.length; i++) {
+    if (_in_arr16[i]==0.01) continue;
+    var nx = (i / 4 | 0) + dx;
+    var ny = (i % 4) + dy;
+    if (nx < 0 || nx >= 4 || ny < 0 || ny >= 4) continue;
+    var i_new = 4 * nx + ny;
+    //console.log(i + ":" + _in_arr16[i] + "->" + i_new + ":" + _in_arr16[i_new]);
+    if (_in_arr16[i_new] == 0.00000001 || _in_arr16[i] == _in_arr16[i_new]) {
+      b_movable = true;
+      break;
+    }  
+  }
 
-	return b_movable;
+  return b_movable;
 }
 
 /**
@@ -154,11 +155,11 @@ function isMovable(_in_arr16, _dir) {
  * @param {*} inputs 
  */
 function isGameOut(inputs) {
-	var _dir = 0;
-	for (; _dir < 4; _dir++) {
-		if (isMovable(inputs, _dir)) break;
-	}
-	return (_dir == 4);
+  var _dir = 0;
+  for (; _dir < 4; _dir++) {
+    if (isMovable(inputs, _dir)) break;
+  }
+  return (_dir == 4);
 }
 
 /**
@@ -168,14 +169,14 @@ function isGameOut(inputs) {
  */
 function downloadJson(json, filename) {
     var a = document.createElement('a');
-	a.setAttribute('href', 'data:text/plain;charset=utf-8,' +
-		encodeURIComponent(JSON.stringify(json)));
-	a.setAttribute('download', filename);
+  a.setAttribute('href', 'data:text/plain;charset=utf-8,' +
+    encodeURIComponent(JSON.stringify(json)));
+  a.setAttribute('download', filename);
 
-	a.style.display = 'none';
-	document.body.appendChild(a);
-	a.click();
-	document.body.removeChild(a);
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 function normalization(arr) {
