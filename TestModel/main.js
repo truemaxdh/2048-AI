@@ -78,6 +78,9 @@ function start(_callBack_showStatus) {
 	// link callback functions
 	callBack_showStatus = _callBack_showStatus;
 	
+	// Start new game
+	restartGame();
+	
 	// start predict and move
-	predictAndMove();
+	setTimeout(function() {predictAndMove();}, 200);
 }
