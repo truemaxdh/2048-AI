@@ -96,9 +96,9 @@ function getInputArr() {
 	}
 	for (var i = 0; i < inputs.length; i++) {
 		if (!inputs[i]) {
-			inputs[i] = 0.01;
+			inputs[i] = 0.00000001;
 		} else if (inputs[i] == max) {
-			inputs[i] = 0.99;
+			inputs[i] = 0.99999999;
 		} else {
 			inputs[i] = cutOff(inputs[i] / max, 2);
 		}
@@ -140,7 +140,7 @@ function isMovable(_in_arr16, _dir) {
 		if (nx < 0 || nx >= 4 || ny < 0 || ny >= 4) continue;
 		var i_new = 4 * nx + ny;
 		//console.log(i + ":" + _in_arr16[i] + "->" + i_new + ":" + _in_arr16[i_new]);
-		if (_in_arr16[i_new] == 0.01 || _in_arr16[i] == _in_arr16[i_new]) {
+		if (_in_arr16[i_new] == 0.00000001 || _in_arr16[i] == _in_arr16[i_new]) {
 			b_movable = true;
 			break;
 		}	
