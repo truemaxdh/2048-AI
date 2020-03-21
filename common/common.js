@@ -1,14 +1,18 @@
 /**
  * get random number of normal distribution
  */
-function gaussianRand() {
-  var rand = 0;
-
-  for (var i = 0; i < 6; i += 1) {
-    rand += Math.random();
-  }
-
-  return rand / 6;
+function getGaussianRandom(mean, standardDeviation) { 
+  return () => { 
+    let q, u, v, p; 
+    do { 
+      u = 2.0 * Math.random() - 1.0; 
+      v = 2.0 * Math.random() - 1.0; 
+      q = u * u + v * v; 
+    } while (q >= 1.0 || q === 0); 
+    
+    p = Math.sqrt(-2.0 * Math.log(q) / q); 
+    return mean + standardDeviation * u * p; 
+  }; 
 }
 
 /**
