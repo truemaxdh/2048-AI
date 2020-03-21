@@ -22,6 +22,7 @@ function fnModel() {
     //console.log("learningRate:" + this.learningRate + ",wt_hi_hi.length:" + this.wt_hi_hi.length);
   };
   this._fill_wt_rndNums = function(wt, layer, row, col) {
+    var mu = 1 / col;
     //var range = 1 / Math.sqrt(row / 2.0);
     var range = Math.sqrt(12 / (row + col));
     for (var l = 0; l < layer; l++) {
@@ -29,7 +30,7 @@ function fnModel() {
       for (var r = 0; r < row; r++) {
         wt[l].push([]);
         for (var c = 0; c < col; c++) {
-          wt[l][r].push(Math.random() * 2 * range - range);
+          wt[l][r].push(mu + Math.random() * 2 * range - range);
         }
       }
     }
