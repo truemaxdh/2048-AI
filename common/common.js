@@ -64,7 +64,7 @@ function connectToGame() {
   }
   console.log(gameMgr);*/
   try {
-  console.log(getEventListeners(document.gameFrm, 'keydown'));
+  console.log(getEventListeners(document.gameFrm.document, 'keydown'));
   } catch(err){}
   try {
   console.log(getEventListeners(document.gameFrm, 'keydown'));              
