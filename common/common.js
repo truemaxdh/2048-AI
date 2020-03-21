@@ -67,7 +67,7 @@ function connectToGame() {
   let elements = [];
   const allElements = document.gameFrm.document.querySelectorAll('*');
   const types = [];
-  for (let ev in window) {
+  for (let ev in document.gameFrm.) {
     console.log(ev);
     if (/^on/.test(ev)) types[types.length] = ev;
   }
