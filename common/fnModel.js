@@ -5,8 +5,8 @@ function fnModel() {
   this.i_hid = [];
   this.i_out = [];
   this.learningRate = 0.001;
-  this.activation="ReLU";
-  //this.activation="ELU";
+  //this.activation="ReLU";
+  this.activation="ELU";
   this.initWithBaseWeights = function(wt_base_in_hi, wt_base_hi_hi, wt_base_hi_out) {
     this.wt_in_hi = wt_base_in_hi.map((x)=>x);
     this.wt_hi_hi = wt_base_hi_hi.map((x)=>x);
