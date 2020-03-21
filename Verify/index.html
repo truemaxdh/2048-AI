@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<script>
-			var arrScores = [];
+			/*var arrScores = [];
 			var totCnt = 0;
 			function loadFile(event) {
 				arrScores = [];
@@ -20,15 +20,69 @@
 					}	
 					readers[i].readAsText(event.target.files[i]);
 				}
-			}
+			}*/
 			
-			function drawGraph() {
-				console.log("HAHAHA");
-			}
+			function onLoadClick() {
+        var elSz=document.getElementById("size");
+        var path = "../results/guided/size" + elSz.value + "/sz" + elSz.value + 
+          "playCnt" + document.getElementById("playCnt").value + ".json";
+        loadModel(path);
+      }
+      
+      /**
+       * load weights from json text
+       * @param {*} strJson 
+       */
+      function loadModel(jsonPath) {
+        console.log(jsonPath);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4) {
+          if (this.status == 200) {
+            // SUCCESS
+            var strJson = this.responseText;
+            var tmp = JSON.parse(strJson);
+
+            console.log(tmp);
+          } else {
+            alert("failed to load data");
+          }
+          }
+        }
+        xhttp.open("GET", jsonPath, true);
+        xhttp.send();
+
+      }
 		</script>
 	</head>
 	<body>
-		<input type="file" onchange="loadFile(event);" multiple>
-		<div id="avg"></div>
+		<div class="leftPannel">
+      <h3>Test Model<button onclick="location.href='../index.html'">menu</button></h3>
+      <h4>Game Connection</h4>
+      <button onclick="connectToGame();">connectToGame</button>
+      <h4>Load Weights</h4>
+      ../results/guided/size
+      <select id="size" onchange="document.getElementById('sz').innerText = this.value;">
+        <option>4x2</option>
+        <option>2x16</option>
+        <option>3x16</option>
+        <option>4x16</option>
+      </select>
+      /sz<div id="sz">4x2</div>playCnt
+      <select id="playCnt">
+          <option>0</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+      </select>
+      <button onclick="onLoadClick();">Load</button>
+    </div>
 	</body>
 </html>
