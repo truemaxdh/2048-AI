@@ -63,7 +63,7 @@ function connectToGame() {
       document.gameFrm.LocalStorageManager);
   }
   console.log(gameMgr);*/
-  const listeners = (function listAllEventListeners() {
+  /*const listeners = (function listAllEventListeners() {
   let elements = [];
   const allElements = document.gameFrm.document.querySelectorAll('*');
   const types = [];
@@ -91,7 +91,11 @@ function connectToGame() {
   return elements.filter(element => element.listeners.length)
 })();
 
-console.table(listeners);
+console.table(listeners);*/
+  
+  document.gameFrm.document.addEveltListener('keydown', function(evt) {
+    console.log(evt);
+  });
 }
 
 
