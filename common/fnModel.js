@@ -23,7 +23,8 @@ function fnModel() {
   };
   this._fill_wt_rndNums = function(wt, layer, row, col) {
     //var range = 1 / Math.sqrt(row / 2.0);
-    var range = Math.sqrt(4 / (row + col));
+    //var range = Math.sqrt(4 / (row + col));
+    var range = 1 / Math.sqrt((row + col) / 4.0);
     for (var l = 0; l < layer; l++) {
       wt.push([]);
       for (var r = 0; r < row; r++) {
