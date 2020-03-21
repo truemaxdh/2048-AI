@@ -63,7 +63,12 @@ function connectToGame() {
       document.gameFrm.LocalStorageManager);
   }
   console.log(gameMgr);*/
-  console.log(document.gameFrm.GameManager);
+  try {
+  console.log(getEventListeners(document.gameFrm, 'keydown'));
+  } catch(err){}
+  try {
+  console.log(getEventListeners(document.gameFrm, 'keydown'));              
+  } catch(err){}
 }
 
 
