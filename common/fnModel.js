@@ -46,20 +46,15 @@ function fnModel() {
     this.i_out = [];
     var arr_calc = this._mat_mul(inputs, this.wt_in_hi[0]);
     this.i_hid.push(arr_calc);
-    //arr_calc = this._ReLU(arr_calc);
-    arr_calc = this._ELU(arr_calc);
+    arr_calc = (this.activation=="ReLU") ? this._ReLU(arr_calc):this._ELU(arr_calc);
     for (var l = 0; l < this.wt_hi_hi.length; l++) {
       arr_calc = this._mat_mul(arr_calc, this.wt_hi_hi[l]);
       this.i_hid.push(arr_calc);
       arr_calc = (this.activation=="ReLU") ? this._ReLU(arr_calc):this._ELU(arr_calc);
-      //arr_calc = this._ReLU(arr_calc);  
-      //arr_calc = this._ELU(arr_calc);  
     }
     arr_calc = this._mat_mul(arr_calc, this.wt_hi_out[0]);
     this.i_out.push(arr_calc);
     arr_calc = (this.activation=="ReLU") ? this._ReLU(arr_calc):this._ELU(arr_calc);
-    //arr_calc = this._ReLU(arr_calc);
-    //arr_calc = this._ELU(arr_calc);
     return arr_calc;
   };
   this._mat_mul = function(arr_in, arr_wt) {
