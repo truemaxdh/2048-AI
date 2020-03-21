@@ -93,7 +93,7 @@ function connectToGame() {
 
 console.table(listeners);*/
   
-  document.gameFrm.document.addEveltListener('keydown', function(evt) {
+  document.gameFrm.document.addEventListener('keydown', function(evt) {
     console.log(evt);
   });
 }
