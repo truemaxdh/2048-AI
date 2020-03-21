@@ -48,54 +48,52 @@ function cutOff(val, digitsUnder) {
  * @param {*} keyCode 
  */
 function sendKeyEvt(keyCode) {
-  document.gameFrm.document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':keyCode}));
+  //document.gameFrm.document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':keyCode}));
+  gameMgr.inputManager.emit("move", (keyCode -34) % 4);
 }
 
 /**
  * connect to game
  */
 function connectToGame() {
-  /*if (!gameMgr) {
+  if (!gameMgr) {
     gameMgr = new document.gameFrm.GameManager(
       4,
       document.gameFrm.KeyboardInputManager, 
       document.gameFrm.HTMLActuator, 
       document.gameFrm.LocalStorageManager);
   }
-  console.log(gameMgr);*/
+  console.log(gameMgr);
   /*const listeners = (function listAllEventListeners() {
-  let elements = [];
-  const allElements = document.gameFrm.document.querySelectorAll('*');
-  const types = [];
-  for (let ev in document.gameFrm) {
-    console.log(ev);
-    if (/^on/.test(ev)) types[types.length] = ev;
-  }
+    let elements = [];
+    const allElements = document.gameFrm.document.querySelectorAll('*');
+    const types = [];
+    for (let ev in document.gameFrm) {
+      console.log(ev);
+      if (/^on/.test(ev)) types[types.length] = ev;
+    }
 
-  for (let i = 0; i < allElements.length; i++) {
-    const currentElement = allElements[i];
-    console.log(currentElement);
-    for (let j = 0; j < types.length; j++) {
-      if (typeof currentElement[types[j]] === 'function') {
-        elements.push({
-          "node": currentElement,
-          "listeners": [ {
-            "type": types[j],
-            "func": currentElement[types[j]].toString(),
-          }]
-        });
+    for (let i = 0; i < allElements.length; i++) {
+      const currentElement = allElements[i];
+      console.log(currentElement);
+      for (let j = 0; j < types.length; j++) {
+        if (typeof currentElement[types[j]] === 'function') {
+          elements.push({
+            "node": currentElement,
+            "listeners": [ {
+              "type": types[j],
+              "func": currentElement[types[j]].toString(),
+            }]
+          });
+        }
       }
     }
-  }
 
-  return elements.filter(element => element.listeners.length)
-})();
+    return elements.filter(element => element.listeners.length)
+  })();
 
-console.table(listeners);*/
-  
-  document.gameFrm.document.addEventListener('keydown', function(evt) {
-    console.log(evt);
-  });
+  console.table(listeners);*/
+
 }
 
 
