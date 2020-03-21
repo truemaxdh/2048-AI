@@ -51,16 +51,16 @@
             html += "<br>lastPlayTrainCnt:" + tmp.lastPlayTrainCnt;
             html += "<br>lastPlayMatchCnt:" + tmp.lastPlayMatchCnt;
             html += "<br>Model";
-            html += "<br>learningRate:" + tmp.learningRate;
-            html += "<br>activation:" + tmp.activation;
+            html += "<br>learningRate:" + tmp.model.learningRate;
+            html += "<br>activation:" + tmp.model.activation;
             html += "<br>wt_in_hi";
-            wtTblToHtml(html, tmp.model.wt_in_hi);
+            html += wtTblToHtml(html, tmp.model.wt_in_hi);
             html += "<br>wt_hi_hi";
             for (var l = 0; l < tmp.model.wt_hi_hi.length; l++) {
-              wtTblToHtml(html, tmp.model.wt_hi_hi[l]);
+              html += wtTblToHtml(html, tmp.model.wt_hi_hi[l]);
             }
             html += "<br>wt_hi_out";
-            wtTblToHtml(html, tmp.model.wt_hi_out);
+            html += wtTblToHtml(html, tmp.model.wt_hi_out);
             var elRes = document.getElementById("result");
             elRes.innerHTML = html;
           } else {
@@ -74,15 +74,16 @@
       }
       
       function wtTblToHtml(html, wt) {
-        html += "<br><table>";
+        var tblHtml = "<br><table>";
         for (var r = 0 ; r < wt.length ; r++) {
-          html += "<tr>";
+          tblHtml += "<tr>";
           for (var c = 0 ; c < wt[r].length; c++) {
-            html += "<td>" + wt[r][c] + "</td>";
+            tblHtml += "<td>" + wt[r][c] + "</td>";
           }
-          html += "</tr>";
+          tblHtml += "</tr>";
         }
-        html += "</table>";
+        tblHtml += "</table>";
+        return tblHtml;
       }
     </script>
   </head>
