@@ -49,7 +49,7 @@ function cutOff(val, digitsUnder) {
  */
 function sendKeyEvt(keyCode) {
   //document.gameFrm.document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':keyCode}));
-  gameMgr.inputManager.emit("move", (keyCode -34) % 4);
+  setTimeout(gameMgr.inputManager.emit("move", (keyCode -34) % 4), 10);
 }
 
 /**
