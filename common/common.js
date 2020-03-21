@@ -65,7 +65,7 @@ function connectToGame() {
   console.log(gameMgr);*/
   const listeners = (function listAllEventListeners() {
   let elements = [];
-  const allElements = document.querySelectorAll('*');
+  const allElements = document.gameFrm.document.querySelectorAll('*');
   const types = [];
   for (let ev in window) {
     if (/^on/.test(ev)) types[types.length] = ev;
