@@ -38,4 +38,4 @@ class GT {
   }
 }
 
-var GTStore = [new GT(4,2), new GT(2,16), new GT(3,16), new GT(4,16)];
+var GTStore = [new GT(4,2), new GT(2,16), new GT(3,16), new GT(4,16), new GT(5,16), new GT(6,16), new GT(7,16)];
