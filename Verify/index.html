@@ -1,28 +1,28 @@
 <html>
-	<head>
-		<script>
-			/*var arrScores = [];
-			var totCnt = 0;
-			function loadFile(event) {
-				arrScores = [];
-				totCnt = event.target.files.length;
-				
-				var readers = [];
-				for (var i = 0; i < totCnt; i++) {
-					readers.push(new FileReader());
-					readers[i].onload = function() {
-						var json = JSON.parse(this.result);
-						arrScores.push(json.scores);
-						console.log(arrScores);
-						if (arrScores.length == totCnt) {
-							drawGraph();
-						}
-					}	
-					readers[i].readAsText(event.target.files[i]);
-				}
-			}*/
-			
-			function onLoadClick() {
+  <head>
+    <script>
+      /*var arrScores = [];
+      var totCnt = 0;
+      function loadFile(event) {
+        arrScores = [];
+        totCnt = event.target.files.length;
+        
+        var readers = [];
+        for (var i = 0; i < totCnt; i++) {
+          readers.push(new FileReader());
+          readers[i].onload = function() {
+            var json = JSON.parse(this.result);
+            arrScores.push(json.scores);
+            console.log(arrScores);
+            if (arrScores.length == totCnt) {
+              drawGraph();
+            }
+          }  
+          readers[i].readAsText(event.target.files[i]);
+        }
+      }*/
+      
+      function onLoadClick() {
         var elSz=document.getElementById("size");
         var path = "../results/guided/size" + elSz.value + "/sz" + elSz.value + 
           "playCnt" + document.getElementById("playCnt").value + ".json";
@@ -54,13 +54,13 @@
             html += "<br>learningRate:" + tmp.learningRate;
             html += "<br>activation:" + tmp.activation;
             html += "<br>wt_in_hi";
-            wtTblToHtml(html, tmp.wt_in_hi);
+            wtTblToHtml(html, tmp.model.wt_in_hi);
             html += "<br>wt_hi_hi";
-            for (var l = 0; l < tmp.wt_hi_hi.length; l++) {
-              wtTblToHtml(html, tmp.wt_hi_hi[l]);
+            for (var l = 0; l < tmp.model.wt_hi_hi.length; l++) {
+              wtTblToHtml(html, tmp.model.wt_hi_hi[l]);
             }
             html += "<br>wt_hi_out";
-            wtTblToHtml(html, tmp.wt_hi_out);
+            wtTblToHtml(html, tmp.model.wt_hi_out);
             var elRes = document.getElementById("result");
             elRes.innerHTML = html;
           } else {
@@ -84,10 +84,10 @@
         }
         html += "</table>";
       }
-		</script>
-	</head>
-	<body>
-		<div>
+    </script>
+  </head>
+  <body>
+    <div>
       <h3>Verify Resut<button onclick="location.href='../index.html'">menu</button></h3>
       <h4>Load Weights</h4>
       ../results/guided/size
@@ -114,5 +114,5 @@
       <button onclick="onLoadClick();">Load</button>
       <div id="result"></div>
     </div>
-	</body>
+  </body>
 </html>
