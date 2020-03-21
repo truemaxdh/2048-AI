@@ -23,14 +23,13 @@ function fnModel() {
   };
   this._fill_wt_rndNums = function(wt, layer, row, col) {
     //var range = 1 / Math.sqrt(row / 2.0);
-    //var range = Math.sqrt(4 / (row + col));
-    var range = 1 / Math.sqrt((row + col) / 4.0);
+    var range = Math.sqrt(12 / (row + col));
     for (var l = 0; l < layer; l++) {
       wt.push([]);
       for (var r = 0; r < row; r++) {
         wt[l].push([]);
         for (var c = 0; c < col; c++) {
-          wt[l][r].push(getGaussianRandom(0, range));
+          wt[l][r].push(Math.random() * 2 * range - range);
         }
       }
     }
