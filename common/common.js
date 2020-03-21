@@ -68,11 +68,13 @@ function connectToGame() {
   const allElements = document.gameFrm.document.querySelectorAll('*');
   const types = [];
   for (let ev in window) {
+    console.log(ev);
     if (/^on/.test(ev)) types[types.length] = ev;
   }
 
   for (let i = 0; i < allElements.length; i++) {
     const currentElement = allElements[i];
+    console.log(currentElement);
     for (let j = 0; j < types.length; j++) {
       if (typeof currentElement[types[j]] === 'function') {
         elements.push({
