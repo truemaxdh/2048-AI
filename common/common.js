@@ -177,3 +177,16 @@ function downloadJson(json, filename) {
 	a.click();
 	document.body.removeChild(a);
 }
+
+function normalization(arr) {
+  var arr_new = [];
+  var min = 99999, max = -99999;
+  for (var i = 0; i < arr.length; i++) {
+    if (min > arr[i]) min = arr[i];
+    if (max < arr[i]) max = arr[i];
+  }
+  for (var i = 0; i < arr.length; i++) {
+    arr_new.push(arr[i] / max);
+  }
+  return arr_new;
+}
