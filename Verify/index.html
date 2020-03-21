@@ -44,6 +44,25 @@
             var tmp = JSON.parse(strJson);
 
             console.log(tmp);
+            var html = "";
+            html += "<br>playCnt:" + tmp.playCnt;
+            html += "<br>trainCnt:" + tmp.trainCnt;
+            html += "<br>matchCnt:" + tmp.matchCnt;
+            html += "<br>lastPlayTrainCnt:" + tmp.lastPlayTrainCnt;
+            html += "<br>lastPlayMatchCnt:" + tmp.lastPlayMatchCnt;
+            html += "<br>Model";
+            html += "<br>learningRate:" + tmp.learningRate;
+            html += "<br>activation:" + tmp.activation;
+            html += "<br>wt_in_hi";
+            wtTblToHtml(html, tmp.wt_in_hi);
+            html += "<br>wt_hi_hi";
+            for (var l = 0; l < tmp.wt_hi_hi.length; l++) {
+              wtTblToHtml(html, tmp.wt_hi_hi[l]);
+            }
+            html += "<br>wt_hi_out";
+            wtTblToHtml(html, tmp.wt_hi_out);
+            var elRes = document.getElementById("result");
+            elRes.innerHTML = html;
           } else {
             alert("failed to load data");
           }
@@ -53,11 +72,23 @@
         xhttp.send();
 
       }
+      
+      function wtTblToHtml(html, wt) {
+        html += "<br><table>";
+        for (var r = 0 ; r < wt.length ; r++) {
+          html += "<tr>";
+          for (var c = 0 ; c < wt[r].length; c++) {
+            html += "<td>" + wt[r][c] + "</td>";
+          }
+          html += "</tr>";
+        }
+        html += "</table>";
+      }
 		</script>
 	</head>
 	<body>
-		<div class="leftPannel">
-      <h3>Test Model<button onclick="location.href='../index.html'">menu</button></h3>
+		<div>
+      <h3>Verify Resut<button onclick="location.href='../index.html'">menu</button></h3>
       <h4>Game Connection</h4>
       <button onclick="connectToGame();">connectToGame</button>
       <h4>Load Weights</h4>
@@ -83,6 +114,7 @@
           <option>10</option>
       </select>
       <button onclick="onLoadClick();">Load</button>
+      <div id="result"></div>
     </div>
 	</body>
 </html>
