@@ -55,15 +55,15 @@ function sendKeyEvt(keyCode) {
  * connect to game
  */
 function connectToGame() {
-if (!gameMgr) {
-  gameMgr = new document.gameFrm.GameManager(
-    4,
-    document.gameFrm.KeyboardInputManager, 
-    document.gameFrm.HTMLActuator, 
-    document.gameFrm.LocalStorageManager);
+  /*if (!gameMgr) {
+    gameMgr = new document.gameFrm.GameManager(
+      4,
+      document.gameFrm.KeyboardInputManager, 
+      document.gameFrm.HTMLActuator, 
+      document.gameFrm.LocalStorageManager);
   }
-  console.log(gameMgr);
-  console.log(document.gameFrm);
+  console.log(gameMgr);*/
+  console.log(document.gameFrm.GameManager);
 }
 
 
