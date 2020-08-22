@@ -92,13 +92,12 @@ function predict() {
   console.log(last_inputs);
   lastPredict = -1;
   nn.classify(last_inputs, function(error, result) {
+    console.log(result); 
     if(error){
       console.error(error);
       //return;
     } else {
-      console.log(result); 
       last_outputs = result;
-
       var top_output = 0;
       for (var i = 0; i < last_outputs.length; i++) {
         if (top_output < last_outputs[i]) {
