@@ -95,15 +95,16 @@ function predict() {
     if(error){
       console.error(error);
       //return;
-    }
-    console.log(result); 
-    last_outputs = result;
-    
-    var top_output = 0;
-    for (var i = 0; i < last_outputs.length; i++) {
-      if (top_output < last_outputs[i]) {
-        top_output = last_outputs[i];
-        lastPredict = i;
+    } else {
+      console.log(result); 
+      last_outputs = result;
+
+      var top_output = 0;
+      for (var i = 0; i < last_outputs.length; i++) {
+        if (top_output < last_outputs[i]) {
+          top_output = last_outputs[i];
+          lastPredict = i;
+        }
       }
     }
     
