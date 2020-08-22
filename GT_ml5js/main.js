@@ -56,7 +56,7 @@ function createModel() {
 
   const trainingOptions={
     batchSize: 24,
-    epochs: 1
+    epochs: 10
   }
 
   nn.train(trainingOptions,function() {
