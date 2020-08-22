@@ -35,7 +35,7 @@ function createModel() {
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['1']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['2']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['3']);
-  //nn.normalizeData();
+  nn.normalizeData();
 
   nn.train(function() {
     console.log("model is created");
@@ -107,10 +107,10 @@ function predict() {
     } else {
       last_outputs = result;
       var top_output = 0;
-      for (var i = 0; i < last_outputs.length; i++) {
-        if (top_output < last_outputs[i]) {
-          top_output = last_outputs[i];
-          lastPredict = i;
+      for (var i = 0; i < result.length; i++) {
+        if (top_output < result[i].confidence) {
+          top_output = result[i].confidence;
+          lastPredict = parseInt(result[i].label);
         }
       }
     }
