@@ -142,8 +142,7 @@ function moveOnce(e) {
     if (lastPredict == lastMove) {
       GTs.matchCnt++;
     }
-    while (nn.data.data.raw.length) { nn.data.data.raw.pop(); }
-    nn.addData(last_inputs, [lastMove.toString()]);
+    while (nn.data.data.raw.length > 1) { nn.data.data.raw.shift(); }
     nn.addData(last_inputs, [lastMove.toString()]);
     console.log("111");
     nn.normalizeData();
