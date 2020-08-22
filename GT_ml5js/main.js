@@ -46,13 +46,13 @@ function loadModelJSON(jsonPath) {
  * load weights from selected files
  * @param {*} strJson 
  */
-function loadModelFiles(el) {
+function loadModelFiles(files) {
   const options = {
     task: 'classification' // or 'regression'
   }
   nn = ml5.neuralNetwork(options);
 
-  nn.load(el.files, function() {
+  nn.load(files, function() {
     console.log("model is loaded");
   });
 }
