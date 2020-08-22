@@ -145,8 +145,9 @@ function moveOnce(e) {
     while (nn.data.data.raw.length) { nn.data.data.raw.pop(); }
     nn.addData(last_inputs, [lastMove.toString()]);
     nn.addData(last_inputs, [lastMove.toString()]);
+    console.log("111");
     nn.normalizeData();
-
+    console.log("222");
     /*const trainingOptions={
       batchSize: 24,
       epochs: 32
@@ -159,7 +160,7 @@ function moveOnce(e) {
       callBack_showStatus(lastMove);
       setTimeout(function() {predict();}, 200);
     }); // use the default training options
-    
+    console.log("333");
   }
 }
 
