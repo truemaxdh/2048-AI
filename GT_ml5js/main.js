@@ -35,7 +35,7 @@ function createModel() {
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['1']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['2']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['3']);
-  nn.normalizeData();
+  //nn.normalizeData();
 
   nn.train(function() {
     console.log("model is created");
@@ -147,7 +147,7 @@ function moveOnce(e) {
     console.log(nn.data.data.raw);
     nn.addData(last_inputs, [lastMove.toString()]);
     console.log(nn.data.data.raw);
-    nn.normalizeData();
+    //nn.normalizeData();
     console.log("222");
     /*const trainingOptions={
       batchSize: 24,
