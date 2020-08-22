@@ -158,7 +158,8 @@ function moveOnce(e) {
         callBack_showStatus(lastMove);
         setTimeout(function() {predict();}, 200);
       }); // use the default training options
-    } catch(...) {
+    } catch(err) {
+      console.log(err)
       GTs.trainCnt++;
       sendKeyEvt(e.keyCode);
       callBack_showStatus(lastMove);
