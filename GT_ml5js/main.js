@@ -3,7 +3,14 @@
  */
 var gameMgr;
 //var model = null;
-var GTs = [];
+var GTs = {
+  trainCnt : 0,
+  matchCnt : 0,
+  playCnt : 0,
+  lastPlayTrainCnt : 0,
+  lastPlayMatchCnt : 0
+};
+
 var models = [];
 var last_inputs;
 var last_outputs;
@@ -54,6 +61,7 @@ function loadModelFiles(files) {
 
   nn.load(files, function() {
     console.log("model is loaded");
+    console.log(files[0]);
   });
 }
            
@@ -81,7 +89,7 @@ function predict() {
   
   last_inputs = _inputs;
   lastPredict = -1;
-  nn.classify(input, function(error, result) {
+  nn.classify(last_inputs, function(error, result) {
     if(error){
       console.error(error);
       return;
@@ -117,27 +125,29 @@ function moveOnce(e) {
     return afterGameOut();
   }
 
-  lastMove = [];
+  lastMove = -1;
   if (last_inputs && isMovable(last_inputs, dir)) {
-    
     lastMove = dir;
-    for (var modelId = 0; modelId < models.length; modelId++) {
-      if (lastPredict[modelId] == lastMove) {
-        GTs[modelId].matchCnt++;
-      }
-      var E = [];
-      for (var i = 0; i < 4; i++) {
-        var err = ((lastMove==i)?1:0) - last_outputs[modelId][i];
-        E.push(err);
-      }
-      models[modelId].backward(E);
-      //console.log(model);
-      GTs[modelId].trainCnt++;
-    }
     
-    sendKeyEvt(e.keyCode);
-    callBack_showStatus(lastMove);
-    setTimeout(function() {predict();}, 200);
+    if (lastPredict == lastMove) {
+      GTs.matchCnt++;
+    }
+    while (nn.data.data.raw.length) { nn.data.data.raw.pop(); }
+    nn.addData(last_inputs, [lastMove]);
+    nn.normalizeData();
+
+    /*const trainingOptions={
+      batchSize: 24,
+      epochs: 32
+    }
+  
+    nn.train(trainingOptions,finishedTraining); // if you want to change the training options*/
+    nn.train(function() {
+      sendKeyEvt(e.keyCode);
+      callBack_showStatus(lastMove);
+      setTimeout(function() {predict();}, 200);
+    }); // use the default training options
+    GTs.trainCnt++;
   }
 }
 
@@ -148,14 +158,12 @@ function afterGameOut() {
   // GameOver
   console.log("GameOver");
   last_inputs = null;
-  
-  for (var modelId = 0; modelId < models.length; modelId++) {
-    GTs[modelId].playCnt++;
-    GTs[modelId].lastPlayTrainCnt = GTs[modelId].trainCnt - GT.lastPlayTrainCnt;
-    GTs[modelId].lastPlayMatchCnt = GTs[modelId].matchCnt - GT.lastPlayMatchCnt;
-    saveModel(GTs[modelId]);
     
-  }
+  GTs.playCnt++;
+  GTs.lastPlayTrainCnt = GTs.trainCnt - GTs.lastPlayTrainCnt;
+  GTs.lastPlayMatchCnt = GTs.matchCnt - GTs.lastPlayMatchCnt;
+  saveModel("model_" + GTs.playCnt + "_" + GTs.trainCnt + "_" + GTs.matchCnt + "_" + GTs.lastPlayTrainCnt + "_" + GTs.lastPlayMatchCnt);
+  
   setTimeout(function() {restartGame();}, 500);
   setTimeout(function() {predict();}, 700);
   return false;  
