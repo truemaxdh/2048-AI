@@ -35,7 +35,7 @@ function createModel() {
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['1']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['2']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['3']);
-  //nn.normalizeData();
+  nn.normalizeData();
 
   const trainingOptions={
     batchSize: 24,
@@ -149,14 +149,12 @@ function moveOnce(e) {
     if (lastPredict == lastMove) {
       GTs.matchCnt++;
     }
-    //while (nn.data.data.raw.length > 1) { nn.data.data.raw.shift(); }
-    nn.data.data.raw.shift();
     nn.addData(last_inputs, [lastMove.toString()]);
     try {
-      //nn.normalizeData();
+      nn.normalizeData();
       const trainingOptions={
         batchSize: 24,
-        epochs: 5
+        epochs: 1
       }
 
       nn.train(trainingOptions,function() {
