@@ -146,11 +146,12 @@ function moveOnce(e) {
   
     nn.train(trainingOptions,finishedTraining); // if you want to change the training options*/
     nn.train(function() {
+      GTs.trainCnt++;
       sendKeyEvt(e.keyCode);
       callBack_showStatus(lastMove);
       setTimeout(function() {predict();}, 200);
     }); // use the default training options
-    GTs.trainCnt++;
+    
   }
 }
 
