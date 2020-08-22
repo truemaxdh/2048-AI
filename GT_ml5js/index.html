@@ -60,12 +60,12 @@
       function showStatus(_dir) {
     	  try {
           for (var i = 0; i < 4; i++) {
-    	    		var mBtn = document.getElementById("move" + i);
-    	    		if (_dir == i) 
-    	    			mBtn.style.background = "orange";
-    	    		else 
-    	    			mBtn.style.background = "white";
-    	    	}  
+            var mBtn = document.getElementById("move_" + i);
+            if (_dir == i) 
+              mBtn.style.background = "orange";
+            else 
+              mBtn.style.background = "white";
+          }  
     		
     		  /* document.getElementById("trainCnt").value = GT.trainCnt;
           document.getElementById("matchCnt").value = GT.matchCnt;
@@ -120,6 +120,11 @@
       <button id="pre0_1">U</button>
       <button id="pre0_2">R</button>
       <button id="pre0_3">D</button>
+      <br>
+      <button id="move_0">L</button>
+      <button id="move_1">U</button>
+      <button id="move_2">R</button>
+      <button id="move_3">D</button>
     </div>
     <div class="gamePannel">
       <iframe name="gameFrm" src="../original_2048/index.html">
