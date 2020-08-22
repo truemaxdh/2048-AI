@@ -31,7 +31,7 @@ function createModel() {
   };
   nn = ml5.neuralNetwork(options);
   console.log("model is created");
-  /*nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['0']);
+  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['0']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['1']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['2']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['3']);
@@ -39,7 +39,7 @@ function createModel() {
 
   nn.train(function() {
     console.log("model is created");
-  }); // use the default training options*/
+  }); // use the default training options
 }
 
 /**
