@@ -124,6 +124,7 @@ function predict() {
   last_inputs = _inputs;
   console.log(last_inputs);
   lastPredict = -1;
+  console.log(nn);
   nn.classify(last_inputs, function(error, result) {
     console.log(result); 
     if(error){
