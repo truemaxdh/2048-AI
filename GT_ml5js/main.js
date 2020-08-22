@@ -31,7 +31,15 @@ function createModel() {
     outputs: 4 // Left, Up, Right, Down
   };
   nn = ml5.neuralNetwork(options);
-  console.log("model is created");
+  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [0]);
+  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [1]);
+  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [2]);
+  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [3]);
+  nn.normalizeData();
+
+  nn.train(function() {
+    console.log("model is created");
+  }); // use the default training options
 }
 
 /**
