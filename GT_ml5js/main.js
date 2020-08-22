@@ -30,7 +30,7 @@ function createModel() {
     outputs: 4 // Left, Up, Right, Down
   };
   nn = ml5.neuralNetwork(options);
-  console.log("model is created");
+  //console.log("model is created");
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['0']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['1']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['2']);
