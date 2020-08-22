@@ -113,7 +113,6 @@ function predict() {
       console.error(error);
       //return;
     } else {
-      last_outputs = result;
       var top_output = 0;
       for (var i = 0; i < result.length; i++) {
         if (top_output < result[i].confidence) {
