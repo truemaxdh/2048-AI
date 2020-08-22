@@ -30,7 +30,7 @@ function createModel() {
  * load weights from json text
  * @param {*} strJson 
  */
-function loadModel(jsonPath) {
+function loadModelJSON(jsonPath) {
   console.log(jsonPath);
   const options = {
     task: 'classification' // or 'regression'
@@ -42,6 +42,21 @@ function loadModel(jsonPath) {
   });
 }
 
+**
+ * load weights from selected files
+ * @param {*} strJson 
+ */
+function loadModelFiles(el) {
+  const options = {
+    task: 'classification' // or 'regression'
+  }
+  nn = ml5.neuralNetwork(options);
+
+  nn.load(el.files, function() {
+    console.log("model is loaded");
+  });
+}
+           
 function saveModel(model_name) {
   nn.save(model_name, function() {
     console.log("model is saved");
