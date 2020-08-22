@@ -13,7 +13,6 @@ var GTs = {
 
 var models = [];
 var last_inputs;
-var last_outputs;
 var lastPredict;
 var lastMove;
 var b_workaround = true;
@@ -31,7 +30,8 @@ function createModel() {
     outputs: 4 // Left, Up, Right, Down
   };
   nn = ml5.neuralNetwork(options);
-  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['0']);
+  console.log("model is created");
+  /*nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['0']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['1']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['2']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['3']);
@@ -39,7 +39,7 @@ function createModel() {
 
   nn.train(function() {
     console.log("model is created");
-  }); // use the default training options
+  }); // use the default training options*/
 }
 
 /**
@@ -142,24 +142,28 @@ function moveOnce(e) {
     if (lastPredict == lastMove) {
       GTs.matchCnt++;
     }
-    //console.log(nn.data.data.raw);
     //while (nn.data.data.raw.length > 1) { nn.data.data.raw.shift(); }
-    //console.log(nn.data.data.raw);
     nn.addData(last_inputs, [lastMove.toString()]);
-    //console.log(nn.data.data.raw);
-    //nn.normalizeData();
-    /*const trainingOptions={
-      batchSize: 24,
-      epochs: 32
-    }
-  
-    nn.train(trainingOptions,finishedTraining); // if you want to change the training options*/
-    nn.train(function() {
+    try {
+      nn.normalizeData();
+      /*const trainingOptions={
+        batchSize: 24,
+        epochs: 32
+      }
+
+      nn.train(trainingOptions,finishedTraining); // if you want to change the training options*/
+      nn.train(function() {
+        GTs.trainCnt++;
+        sendKeyEvt(e.keyCode);
+        callBack_showStatus(lastMove);
+        setTimeout(function() {predict();}, 200);
+      }); // use the default training options
+    } catch(...) {
       GTs.trainCnt++;
       sendKeyEvt(e.keyCode);
       callBack_showStatus(lastMove);
       setTimeout(function() {predict();}, 200);
-    }); // use the default training options
+    }
   }
 }
 
