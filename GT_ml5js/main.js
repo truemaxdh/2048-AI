@@ -41,7 +41,7 @@ function createModel() {
     {
       type: 'dense',
       activation: 'sigmoid'
-    }
+    },
     inputs: 16,
     outputs: 4 // Left, Up, Right, Down
   };
