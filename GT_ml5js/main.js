@@ -19,7 +19,7 @@ var nn;
  */
 function createModel() {
   const options = {
-    task: 'classification' // or 'regression'
+    task: 'classification', // or 'regression'
     inputs: 16,
     outputs: 4 // Left, Up, Right, Down
   }
