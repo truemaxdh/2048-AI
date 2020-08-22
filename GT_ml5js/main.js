@@ -29,8 +29,8 @@ function createModel() {
     task: 'classification', // or 'regression'
     inputs: 16,
     outputs: 4 // Left, Up, Right, Down
-  }
-  nn = ml5.neuralNetwork(options)
+  };
+  nn = ml5.neuralNetwork(options);
 }
 
 /**
@@ -41,7 +41,7 @@ function loadModelJSON(jsonPath) {
   console.log(jsonPath);
   const options = {
     task: 'classification' // or 'regression'
-  }
+  };
   nn = ml5.neuralNetwork(options);
 
   nn.load(jsonPath, function() {
