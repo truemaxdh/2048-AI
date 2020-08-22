@@ -31,10 +31,10 @@ function createModel() {
     outputs: 4 // Left, Up, Right, Down
   };
   nn = ml5.neuralNetwork(options);
-  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [0]);
-  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [1]);
-  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [2]);
-  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [3]);
+  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['0']);
+  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['1']);
+  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['2']);
+  nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['3']);
   nn.normalizeData();
 
   nn.train(function() {
@@ -143,7 +143,7 @@ function moveOnce(e) {
       GTs.matchCnt++;
     }
     while (nn.data.data.raw.length) { nn.data.data.raw.pop(); }
-    nn.addData(last_inputs, [lastMove]);
+    nn.addData(last_inputs, ["" + lastMove]);
     nn.normalizeData();
 
     /*const trainingOptions={
