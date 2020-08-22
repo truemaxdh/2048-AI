@@ -94,7 +94,7 @@ function predict() {
   nn.classify(last_inputs, function(error, result) {
     if(error){
       console.error(error);
-      return;
+      //return;
     }
     console.log(result); 
     last_outputs = result;
