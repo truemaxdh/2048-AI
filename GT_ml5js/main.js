@@ -42,8 +42,8 @@ function loadModel(jsonPath) {
   });
 }
 
-function saveModel(_gt) {
-  nn.save(, function() {
+function saveModel(model_name) {
+  nn.save(model_name, function() {
     console.log("model is saved");
   });
 }
