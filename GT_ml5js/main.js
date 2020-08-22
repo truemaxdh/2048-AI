@@ -18,13 +18,14 @@ var lastMove;
 var b_workaround = true;
 var callBack_showStatus, callBack_showPredict;
 
-var nn;
+let nn;
 
 /**
  * create new weights
  */
 function createModel() {
   const options = {
+    debug: true,
     task: 'classification', // or 'regression'
     //inputs: 16,
     //outputs: 4, // Left, Up, Right, Down
@@ -43,8 +44,7 @@ function createModel() {
         type: 'dense',
         activation: 'sigmoid'
       }
-    ]
-    
+    ]    
   };
   nn = ml5.neuralNetwork(options);
   //console.log("model is created");
