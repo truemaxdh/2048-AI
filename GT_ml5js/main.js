@@ -150,6 +150,7 @@ function moveOnce(e) {
       GTs.matchCnt++;
     }
     //while (nn.data.data.raw.length > 1) { nn.data.data.raw.shift(); }
+    nn.data.data.raw.shift();
     nn.addData(last_inputs, [lastMove.toString()]);
     try {
       //nn.normalizeData();
