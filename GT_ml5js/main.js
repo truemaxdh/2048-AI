@@ -89,6 +89,7 @@ function predict() {
   } */
   
   last_inputs = _inputs;
+  console.log(last_inputs);
   lastPredict = -1;
   nn.classify(last_inputs, function(error, result) {
     if(error){
