@@ -173,7 +173,7 @@ function moveOnce(e) {
       nn.normalizeData();
       const trainingOptions={
         batchSize: 24,
-        epochs: 1
+        epochs: 10
       }
 
       nn.train(trainingOptions,function() {
