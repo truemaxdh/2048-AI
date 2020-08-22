@@ -52,7 +52,7 @@ function createModel() {
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['1']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['2']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['3']);
-  nn.normalizeData();
+  //nn.normalizeData();
 
   const trainingOptions={
     batchSize: 24,
