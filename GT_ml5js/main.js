@@ -168,7 +168,7 @@ function moveOnce(e) {
       GTs.matchCnt++;
     }
     nn.addData(last_inputs, [lastMove.toString()]);
-    console.log(nn.data.data.raw);
+    console.log(nn);
     try {
       //nn.normalizeData();
       const trainingOptions={
