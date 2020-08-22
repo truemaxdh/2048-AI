@@ -78,19 +78,14 @@
       }
       
       function onLoadClick() {
-        var elSz=document.getElementById("size");
-        var path = "../results/guided/size" + elSz.value + "/sz" + elSz.value + 
-          "playCnt" + document.getElementById("playCnt").value + ".json";
         loadModel(GTStore[elSz.selectedIndex], path);
       }
       
       function onCreateClick() {
-        var elSz=document.getElementById("size");
         createModel(GTStore[elSz.selectedIndex]);
       }
       
       function onSaveClick() {
-        var elSz=document.getElementById("size");
         saveModel(GTStore[elSz.selectedIndex]);
       }
     </script>
