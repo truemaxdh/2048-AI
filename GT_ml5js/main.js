@@ -143,7 +143,8 @@ function moveOnce(e) {
       GTs.matchCnt++;
     }
     while (nn.data.data.raw.length) { nn.data.data.raw.pop(); }
-    nn.addData(last_inputs, ["" + lastMove]);
+    nn.addData(last_inputs, [lastMove.toString()]);
+    nn.addData(last_inputs, [lastMove.toString()]);
     nn.normalizeData();
 
     /*const trainingOptions={
