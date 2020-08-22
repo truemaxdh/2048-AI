@@ -49,7 +49,7 @@ function loadModelJSON(jsonPath) {
   });
 }
 
-**
+/**
  * load weights from selected files
  * @param {*} strJson 
  */
