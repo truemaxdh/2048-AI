@@ -28,20 +28,21 @@ function createModel() {
     debug: true,
     task: 'classification', // or 'regression'
     layers: [
-    {
-      type: 'dense',
-      units: 16,
-      activation: 'relu'
-    },
-    {
-      type: 'dense',
-      units: 16,
-      activation: 'sigmoid'
-    },
-    {
-      type: 'dense',
-      activation: 'sigmoid'
-    },
+      {
+        type: 'dense',
+        units: 16,
+        activation: 'relu'
+      },
+      {
+        type: 'dense',
+        units: 16,
+        activation: 'sigmoid'
+      },
+      {
+        type: 'dense',
+        activation: 'sigmoid'
+      }
+    ],
     inputs: 16,
     outputs: 4 // Left, Up, Right, Down
   };
