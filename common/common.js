@@ -125,7 +125,7 @@ function getInputArr() {
       }
     }
   }
-  for (var i = 0; i < inputs.length; i++) {
+  /*for (var i = 0; i < inputs.length; i++) {
     if (!inputs[i]) {
       //inputs[i] = 0.00000001;
       inputs[i] = 0;
@@ -135,7 +135,7 @@ function getInputArr() {
     } else {
       inputs[i] = cutOff(inputs[i] / max, 2);
     }
-  }
+  }*/
   return inputs;
 }
 
