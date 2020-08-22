@@ -48,16 +48,15 @@
     <script>
     	function showPredict(_dirs) {
         console.log(_dirs);
-        for (var i = 0; i < _dirs.length; i++) {
-          for (var j = 0; j < 4; j++) {
-            var mBtn = document.getElementById("pre" + i + "_" + j);
-            if (_dirs[i] == j) 
-              mBtn.style.background = "orange";
-            else 
-              mBtn.style.background = "white";
-          }
+        for (var j = 0; j < 4; j++) {
+          var mBtn = document.getElementById("pre0" + "_" + j);
+          if (_dirs == j) 
+            mBtn.style.background = "orange";
+          else 
+            mBtn.style.background = "white";
         }
       }
+      
       function showStatus(_dir) {
     	  try {
           for (var i = 0; i < 4; i++) {
