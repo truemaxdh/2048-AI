@@ -27,8 +27,8 @@ function createModel() {
   const options = {
     debug: true,
     task: 'classification', // or 'regression'
-    //inputs: 16,
-    //outputs: 4, // Left, Up, Right, Down
+    inputs: 16,
+    outputs: 4, // Left, Up, Right, Down
     layers: [
       {
         type: 'dense',
