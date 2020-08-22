@@ -68,7 +68,6 @@ function saveModel(model_name) {
  * predict next step
  */
 function predict() {
-  lastPredict = [];
   var _inputs = getInputArr();
   //console.log(_inputs);
   if (isGameOut(_inputs)) {
@@ -81,29 +80,29 @@ function predict() {
   } */
   
   last_inputs = _inputs;
-  last_outputs = [];
-  for (var modelId = 0; modelId < models.length; modelId++) {
-    lastPredict.push(-1);
-    /* for (var lg = 0; lg < models[modelId].wt_hi_out[0].length; lg++) {
-      console.log(models[modelId].wt_hi_out[0][lg]);
-    } */  
-    last_outputs.push(models[modelId].forward(last_inputs));
-    console.log(last_outputs[modelId]);
-    var NM_MIN_VALUE = -99999999;
-    var top_output = 0;
+  lastPredict = -1;
+  nn.classify(input, function(error, result) {
+    if(error){
+      console.error(error);
+      return;
+    }
+    console.log(result); 
+    last_outputs = result;
     
-    for (var i = 0; i < last_outputs[modelId].length; i++) {
-      if (top_output < last_outputs[modelId][i]) {
-        top_output = last_outputs[modelId][i];
-        lastPredict[modelId] = i;
+    var top_output = 0;
+    for (var i = 0; i < last_outputs.length; i++) {
+      if (top_output < last_outputs[i]) {
+        top_output = last_outputs[i];
+        lastPredict = i;
       }
     }
-  }
-  
-
+    
     //last_inputs = inputs;
     callBack_showPredict(lastPredict);
     return true;
+  });
+  
+  
 }
 
 /**
