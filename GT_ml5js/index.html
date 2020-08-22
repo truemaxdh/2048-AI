@@ -78,12 +78,12 @@
       }
       
       function onLoadURLClick() {
-        loadModel("");
+        loadModelJSON("model");
       }
       
       function onLoadFilesClick() {
         var el = document.getElementById("files");
-        console.log(el.files);
+        loadModelFiles(el.files);
       }
       
       function onCreateClick() {
