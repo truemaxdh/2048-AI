@@ -12,14 +12,18 @@ var lastMove;
 var b_workaround = true;
 var callBack_showStatus, callBack_showPredict;
 
+var nn;
+
 /**
  * create new weights
  */
 function createModel(_gt) {
-  _gt.createModel();
-  GTs.push(_gt);
-  models.push(_gt.model);
-  console.log(_gt);
+  const options = {
+    task: 'classification' // or 'regression'
+    inputs: 16,
+    outputs: 4 // Left, Up, Right, Down
+  }
+  nn = ml5.neuralNetwork(options)
 }
 
 /**
@@ -28,28 +32,20 @@ function createModel(_gt) {
  */
 function loadModel(_gt, jsonPath) {
 	console.log(jsonPath);
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4) {
-		if (this.status == 200) {
-			// SUCCESS
-			var strJson = this.responseText;
-			var tmp = JSON.parse(strJson);
-			_gt.loadModel(tmp.model, tmp.trainCnt, tmp.matchCnt, tmp.playCnt, tmp.lastPlayTrainCnt, tmp.lastPlayMatchCnt);
-			GTs.push(_gt);
-  			models.push(_gt.model);
-  			console.log(_gt);
-		} else {
-			alert("failed to load data");
-		}
-		}
-	}
-	xhttp.open("GET", jsonPath, true);
-	xhttp.send();
+	const options = {
+    task: 'classification' // or 'regression'
+  }
+  nn = ml5.neuralNetwork(options);
+
+  nn.load(jsonPath, function() {
+    console.log("model is loaded");
+  });
 }
 
 function saveModel(_gt) {
-	downloadJson(_gt, "sz" + _gt.cols + "x" + _gt.rows + "playCnt" + _gt.playCnt + ".json");
+	nn.save(, function() {
+    console.log("model is saved");
+  });
 }
 
 
