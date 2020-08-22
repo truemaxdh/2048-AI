@@ -27,7 +27,7 @@ function createModel() {
   const options = {
     task: 'classification', // or 'regression'
     inputs: 16,
-    outputs: 4, // Left, Up, Right, Down
+    outputs: 4/*, // Left, Up, Right, Down
     layers: [
       {
         type: 'dense',
@@ -43,7 +43,7 @@ function createModel() {
         type: 'dense',
         activation: 'sigmoid'
       }
-    ]
+    ]*/
     
   };
   nn = ml5.neuralNetwork(options);
