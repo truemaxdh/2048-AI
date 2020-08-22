@@ -35,11 +35,19 @@ function createModel() {
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['1']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['2']);
   nn.addData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ['3']);
-  nn.normalizeData();
+  //nn.normalizeData();
 
-  nn.train(function() {
+  const trainingOptions={
+    batchSize: 24,
+    epochs: 1
+  }
+
+  nn.train(trainingOptions,function() {
     console.log("model is created");
-  }); // use the default training options
+  }); // if you want to change the training options
+  /*nn.train(function() {
+    console.log("model is created");
+  }); // use the default training options*/
 }
 
 /**
@@ -145,19 +153,24 @@ function moveOnce(e) {
     //while (nn.data.data.raw.length > 1) { nn.data.data.raw.shift(); }
     nn.addData(last_inputs, [lastMove.toString()]);
     try {
-      nn.normalizeData();
-      /*const trainingOptions={
+      //nn.normalizeData();
+      const trainingOptions={
         batchSize: 24,
-        epochs: 32
+        epochs: 5
       }
 
-      nn.train(trainingOptions,finishedTraining); // if you want to change the training options*/
-      nn.train(function() {
+      nn.train(trainingOptions,function() {
         GTs.trainCnt++;
         sendKeyEvt(e.keyCode);
         callBack_showStatus(lastMove);
         setTimeout(function() {predict();}, 200);
-      }); // use the default training options
+      }); // if you want to change the training options
+      /*nn.train(function() {
+        GTs.trainCnt++;
+        sendKeyEvt(e.keyCode);
+        callBack_showStatus(lastMove);
+        setTimeout(function() {predict();}, 200);
+      }); // use the default training options*/
     } catch(err) {
       console.log(err)
       GTs.trainCnt++;
