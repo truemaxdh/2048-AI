@@ -167,13 +167,14 @@ function isMovable(_in_arr16, _dir) {
   var b_movable = false;
   //console.log(dx + "," + dy);
   for (var i = 0; i < _in_arr16.length; i++) {
-    if (_in_arr16[i]==0.00000001) continue;
+    //if (_in_arr16[i]==0.00000001) continue;
+    if (_in_arr16[i]==0) continue;
     var nx = (i / 4 | 0) + dx;
     var ny = (i % 4) + dy;
     if (nx < 0 || nx >= 4 || ny < 0 || ny >= 4) continue;
     var i_new = 4 * nx + ny;
     //console.log(i + ":" + _in_arr16[i] + "->" + i_new + ":" + _in_arr16[i_new]);
-    if (_in_arr16[i_new] == 0.00000001 || _in_arr16[i] == _in_arr16[i_new]) {
+    if (_in_arr16[i_new] == 0 || _in_arr16[i] == _in_arr16[i_new]) {
       b_movable = true;
       break;
     }  
