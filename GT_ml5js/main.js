@@ -142,9 +142,11 @@ function moveOnce(e) {
     if (lastPredict == lastMove) {
       GTs.matchCnt++;
     }
+    console.log(nn.data.data.raw);
     while (nn.data.data.raw.length > 1) { nn.data.data.raw.shift(); }
+    console.log(nn.data.data.raw);
     nn.addData(last_inputs, [lastMove.toString()]);
-    console.log("111");
+    console.log(nn.data.data.raw);
     nn.normalizeData();
     console.log("222");
     /*const trainingOptions={
