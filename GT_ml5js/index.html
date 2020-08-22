@@ -77,16 +77,21 @@
     	
       }
       
-      function onLoadClick() {
-        loadModel(GTStore[elSz.selectedIndex], path);
+      function onLoadURLClick() {
+        loadModel("");
+      }
+      
+      function onLoadFilesClick() {
+        var el = document.getElementById("files");
+        console.log(el.files);
       }
       
       function onCreateClick() {
-        createModel(GTStore[elSz.selectedIndex]);
+        createModel();
       }
       
       function onSaveClick() {
-        saveModel(GTStore[elSz.selectedIndex]);
+        saveModel("model");
       }
     </script>
   </head>
@@ -97,7 +102,10 @@
       <button onclick="connectToGame();">connectToGame</button>
       <h4>Create/Load Weights</h4>
       <button onclick="onCreateClick();">Create</button>
-      <button onclick="onLoadClick();">Load</button>
+      <button onclick="onLoadURLClick();">Load From URL</button>
+      <label for="files">Files:</label>
+      <input type="file" id="files" name="files" multiple>
+      <button onclick="onLoadFileClick();">Load From Files</button>
       <h4>Save</h4>
       <button onclick="onSaveClick();">Save</button>
       <h4>Unit Functions</h4>
