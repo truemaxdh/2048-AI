@@ -168,9 +168,9 @@ function moveOnce(e) {
       GTs.matchCnt++;
     }
     nn.addData(last_inputs, [lastMove.toString()]);
-    console.log(nn);
+    //console.log(nn);
     try {
-      //nn.normalizeData();
+      nn.normalizeData();
       const trainingOptions={
         batchSize: 24,
         epochs: 1
